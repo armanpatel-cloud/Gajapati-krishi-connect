@@ -1,9 +1,9 @@
-<!DOCTYPE1 html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gajapati Krushi Connect | Digital Agriculture Portal</title>
+    <title>Gajapati Krushi Connect |  Gajapati Digital Agriculture Portal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
@@ -34,28 +34,17 @@
     </script>
     <style>
         .glass-nav {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(10px);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #10b981;
-            border-radius: 10px;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Top Emergency Advisory Banner -->
+    <!-- Emergency Advisory Banner -->
     <div class="bg-amber-600 text-white text-xs md:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
         <i data-lucide="bell-ring" class="w-4 h-4 animate-bounce"></i>
-        <span><strong>Gajapati Agromet Advisory:</strong> High elevation rainfall predicted in Mohana & R. Udayagiri blocks. Ensure drainage in Hill Coffee & Pineapple fields. Ama Krushi Helpline: <strong>155333</strong></span>
+        <span id="banner-text"><strong>Gajapati Agromet Advisory:</strong> High elevation rainfall predicted in Mohana & R. Udayagiri blocks. Ensure drainage in Hill Coffee & Pineapple fields. Ama Krushi Helpline: <strong>155333</strong></span>
     </div>
 
     <!-- Navigation Header -->
@@ -69,34 +58,38 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="font-black text-xl md:text-2xl tracking-tight text-slate-900">Gajapati<span class="text-emerald-600">Krushi</span></span>
+                            <span class="font-black text-xl md:text-2xl tracking-tight text-slate-900" id="site-title">Gajapati<span class="text-emerald-600">Krushi</span></span>
                             <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">Odisha</span>
                         </div>
-                        <p class="text-xs text-slate-500 font-medium hidden sm:block">Digital Agriculture & D2C Tribal Agri-Portal</p>
+                        <p class="text-xs text-slate-500 font-medium hidden sm:block" id="site-subtitle">Digital Agriculture & D2C Tribal Agri-Portal</p>
                     </div>
                 </div>
 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-1">
                     <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-emerald-700 bg-emerald-50 transition">Home</button>
-                    <button onclick="switchTab('crops')" id="nav-crops" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Gajapati Crop Wiki</button>
-                    <button onclick="switchTab('marketplace')" id="nav-marketplace" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Tribal D2C Market</button>
-                    <button onclick="switchTab('weather')" id="nav-weather" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Weather & Advisories</button>
+                    <button onclick="switchTab('crops')" id="nav-crops" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Crop Wiki</button>
+                    <button onclick="switchTab('marketplace')" id="nav-marketplace" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Tribal Market</button>
+                    <button onclick="switchTab('weather')" id="nav-weather" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Weather</button>
                     <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">Agronomy Tools</button>
-                    <button onclick="switchTab('extension')" id="nav-extension" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">PRA & Extension</button>
+                    <button onclick="switchTab('extension')" id="nav-extension" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">PRA Guides</button>
                 </nav>
 
-                <!-- Header Actions -->
-                <div class="hidden sm:flex items-center space-x-3">
-                    <button onclick="openModal('listCropModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs md:text-sm px-4 py-2.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-1.5">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        <span>Sell Produce</span>
+                <!-- Header Actions & Language Toggle -->
+                <div class="flex items-center space-x-3">
+                    <!-- Language Switcher Button -->
+                    <button onclick="toggleLanguage()" id="lang-btn" class="bg-slate-100 border border-slate-300 hover:bg-slate-200 text-slate-800 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="languages" class="w-4 h-4 text-emerald-600"></i>
+                        <span id="lang-text">ଓଡ଼ିଆ</span>
                     </button>
-                </div>
 
-                <!-- Mobile menu button -->
-                <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-xl text-slate-600 hover:text-emerald-600 hover:bg-slate-100 focus:outline-none">
+                    <button onclick="openModal('listCropModal')" class="hidden sm:flex bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs md:text-sm px-4 py-2.5 rounded-xl shadow-md hover:shadow-lg transition items-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span id="sell-btn-text">Sell Produce</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:text-emerald-600 hover:bg-slate-100">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
@@ -105,14 +98,14 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2">
-            <button onclick="switchTab('home')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Home</button>
-            <button onclick="switchTab('crops')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Gajapati Crop Wiki</button>
-            <button onclick="switchTab('marketplace')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Tribal D2C Market</button>
-            <button onclick="switchTab('weather')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Weather & Advisories</button>
-            <button onclick="switchTab('tools')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Agronomy Tools</button>
-            <button onclick="switchTab('extension')" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">PRA & Extension Guides</button>
+            <button onclick="switchTab('home')" class="m-home block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Home</button>
+            <button onclick="switchTab('crops')" class="m-crops block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Crop Wiki</button>
+            <button onclick="switchTab('marketplace')" class="m-market block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Tribal Market</button>
+            <button onclick="switchTab('weather')" class="m-weather block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Weather</button>
+            <button onclick="switchTab('tools')" class="m-tools block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">Agronomy Tools</button>
+            <button onclick="switchTab('extension')" class="m-extension block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-600">PRA Guides</button>
             <div class="pt-2">
-                <button onclick="openModal('listCropModal')" class="w-full bg-emerald-600 text-white font-medium text-sm py-2.5 rounded-xl shadow text-center">Sell Produce / List Harvest</button>
+                <button onclick="openModal('listCropModal')" class="m-sell w-full bg-emerald-600 text-white font-medium text-sm py-2.5 rounded-xl shadow text-center">Sell Produce / List Harvest</button>
             </div>
         </div>
     </header>
@@ -129,223 +122,93 @@
                 <div class="relative z-10 max-w-3xl space-y-6">
                     <div class="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold backdrop-blur-md">
                         <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
-                        Gajapati District • Paralakhemundi • Mohana • R. Udayagiri
+                        <span id="hero-tag">Gajapati District • Paralakhemundi • Mohana • R. Udayagiri</span>
                     </div>
-                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight" id="hero-title">
                         Empowering Gajapati’s Farmers with Open Tech & Direct Markets
                     </h1>
-                    <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed" id="hero-desc">
                         A unified digital agriculture network connecting hill coffee growers, organic turmeric farmers, millet SHGs, and local agronomists across 7 blocks of Gajapati District, Odisha.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-2">
-                        <button onclick="switchTab('marketplace')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg hover:shadow-emerald-500/30 transition flex items-center gap-2">
-                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                            Explore Local Produce
+                        <button onclick="switchTab('marketplace')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg hover:shadow-emerald-500/30 transition flex items-center gap-2" id="hero-btn-market">
+                            <i data-lucide="shopping-bag" class="w-5 h-5"></i> Explore Local Produce
                         </button>
-                        <button onclick="switchTab('crops')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-6 py-3.5 rounded-2xl backdrop-blur-md transition flex items-center gap-2">
-                            <i data-lucide="book-open" class="w-5 h-5"></i>
-                            Gajapati Sowing Wiki
+                        <button onclick="switchTab('crops')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-6 py-3.5 rounded-2xl backdrop-blur-md transition flex items-center gap-2" id="hero-btn-wiki">
+                            <i data-lucide="book-open" class="w-5 h-5"></i> Gajapati Sowing Wiki
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Block Quick-Select Cards -->
+            <!-- Block Selection Cards -->
             <div>
                 <div class="flex justify-between items-end mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-900">Gajapati District Agricultural Blocks</h2>
-                        <p class="text-slate-500 text-sm">Select a block to filter local crop profiles, weather advisories, and SHG producers.</p>
+                        <h2 class="text-2xl font-bold text-slate-900" id="block-section-title">Gajapati District Agricultural Blocks</h2>
+                        <p class="text-slate-500 text-sm" id="block-section-subtitle">Select a block to filter local crop profiles, weather advisories, and SHG producers.</p>
                     </div>
-                    <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full hidden sm:inline-block">7 Administrative Blocks</span>
+                    <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full hidden sm:inline-block" id="block-badge">7 Administrative Blocks</span>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                    <!-- Paralakhemundi -->
                     <div onclick="filterByBlock('Paralakhemundi')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="building-2" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="building-2" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Paralakhemundi</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">District HQ / Paddy</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b1-desc">HQ / Paddy</p>
                     </div>
-                    <!-- Mohana -->
                     <div onclick="filterByBlock('Mohana')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="sun" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="sun" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Mohana</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Pineapple & Maize</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b2-desc">Pineapple & Maize</p>
                     </div>
-                    <!-- R. Udayagiri -->
                     <div onclick="filterByBlock('R. Udayagiri')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="mountain" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="mountain" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">R. Udayagiri</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Hill Coffee & Spices</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b3-desc">Coffee & Spices</p>
                     </div>
-                    <!-- Rayagada -->
                     <div onclick="filterByBlock('Rayagada')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="tree-pine" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="tree-pine" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Rayagada</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Cashew & Forest Produce</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b4-desc">Cashew Produce</p>
                     </div>
-                    <!-- Gumma -->
                     <div onclick="filterByBlock('Gumma')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="wheat" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="wheat" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Gumma</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Mandia / Millet Mission</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b5-desc">Mandia / Millet</p>
                     </div>
-                    <!-- Nuagada -->
                     <div onclick="filterByBlock('Nuagada')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="flower2" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="flower2" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Nuagada</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Organic Turmeric</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b6-desc">Organic Turmeric</p>
                     </div>
-                    <!-- Kashinagar -->
                     <div onclick="filterByBlock('Kashinagar')" class="cursor-pointer bg-white border border-slate-200 hover:border-emerald-500 p-4 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition">
-                            <i data-lucide="droplets" class="w-5 h-5"></i>
-                        </div>
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition"><i data-lucide="droplets" class="w-5 h-5"></i></div>
                         <h3 class="font-bold text-slate-800 text-sm">Kashinagar</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Vansadhara Basin Paddy</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5" id="b7-desc">Vansadhara Paddy</p>
                     </div>
                 </div>
             </div>
 
             <!-- Key Feature Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
                 <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold">
-                        <i data-lucide="book-marked" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900">Gajapati Specialty Wiki</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Complete agro-climatic guide for Chandragiri Arabica Coffee, Organic Kandhamal/Gajapati Turmeric, Mohana Pineapple, and Ragi varieties.
-                    </p>
-                    <button onclick="switchTab('crops')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2">
-                        View Gajapati Crops <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold"><i data-lucide="book-marked" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold text-slate-900" id="card1-title">Gajapati Specialty Wiki</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" id="card1-desc">Complete agro-climatic guide for Chandragiri Arabica Coffee, Organic Kandhamal/Gajapati Turmeric, Mohana Pineapple, and Ragi varieties.</p>
+                    <button onclick="switchTab('crops')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2" id="card1-btn">View Gajapati Crops <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
                 </div>
-                <!-- Card 2 -->
                 <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold">
-                        <i data-lucide="store" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900">Direct Tribal & SHG Market</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Paralakhemundi & Mohana without middleman markups.
-                    </p>
-                    <button onclick="switchTab('marketplace')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2">
-                        Browse Market <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold"><i data-lucide="store" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold text-slate-900" id="card2-title">Direct Tribal & SHG Market</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" id="card2-desc">Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Paralakhemundi & Mohana without middleman markups.</p>
+                    <button onclick="switchTab('marketplace')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2" id="card2-btn">Browse Market <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
                 </div>
-                <!-- Card 3 -->
                 <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold">
-                        <i data-lucide="calculator" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900">District Extension Tools</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Fertilizer & irrigation calculators tailored for red, forest, and Vansadhara river basin soil profiles, plus Participatory Rural Appraisal guides.
-                    </p>
-                    <button onclick="switchTab('tools')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2">
-                        Launch Tools <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Block Map Interactive Simulation -->
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-900">Interactive Gajapati Block Map</h2>
-                        <p class="text-slate-500 text-sm">Click on any block marker to view primary crops, rainfall data, and agricultural officer contact points.</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span> <span class="text-xs font-semibold text-slate-600">Active High-Yield Zones</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                    <!-- Canvas Map Representation -->
-                    <div class="lg:col-span-2 bg-slate-900 rounded-2xl p-4 relative min-h-[320px] flex items-center justify-center overflow-hidden">
-                        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px]"></div>
-                        
-                        <!-- Map SVG Outline Simulation -->
-                        <div class="relative w-full max-w-md h-72 border border-emerald-500/30 rounded-2xl bg-emerald-950/40 p-4 flex flex-col justify-between">
-                            <div class="text-xs text-emerald-400 font-mono flex justify-between">
-                                <span>Gajapati District (Geographic Coordinate)</span>
-                                <span>18.81° N, 84.08° E</span>
-                            </div>
-
-                            <!-- Interactive Clickable Pins -->
-                            <div class="relative w-full h-48">
-                                <!-- Paralakhemundi -->
-                                <button onclick="selectBlockMap('Paralakhemundi', 'Paddy, Sugarcane, Vegetables', '1100 mm', 'Kashinagar / Paralakhemundi DAO')" class="absolute bottom-4 right-10 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> Paralakhemundi
-                                </button>
-                                <!-- Mohana -->
-                                <button onclick="selectBlockMap('Mohana', 'Pineapple, Maize, Mango, Ginger', '1350 mm', 'Mohana Block AAO Office')" class="absolute top-4 left-10 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> Mohana
-                                </button>
-                                <!-- R. Udayagiri -->
-                                <button onclick="selectBlockMap('R. Udayagiri', 'Chandragiri Coffee, Pepper, Cardamom', '1400 mm', 'R. Udayagiri Horticulture Officer')" class="absolute top-12 right-24 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> R. Udayagiri
-                                </button>
-                                <!-- Rayagada (Gajapati) -->
-                                <button onclick="selectBlockMap('Rayagada Block', 'Cashew, Cashew Processing, Timber', '1200 mm', 'Rayagada Agri Extension Office')" class="absolute top-24 left-1/3 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> Rayagada
-                                </button>
-                                <!-- Gumma -->
-                                <button onclick="selectBlockMap('Gumma', 'Mandia (Ragi), Suan, Foxtail Millet', '1250 mm', 'Gumma Odisha Millet Mission Hub')" class="absolute bottom-16 left-16 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> Gumma
-                                </button>
-                                <!-- Nuagada -->
-                                <button onclick="selectBlockMap('Nuagada', 'Organic Turmeric, Hill Pulses', '1300 mm', 'Nuagada Farmers Producer Co.')" class="absolute top-20 right-10 bg-emerald-500 hover:scale-125 text-white font-bold px-2 py-1 rounded text-[10px] shadow-lg transition flex items-center gap-1">
-                                    <i data-lucide="map-pin" class="w-3 h-3"></i> Nuagada
-                                </button>
-                            </div>
-
-                            <div class="text-[10px] text-slate-400 font-mono text-center">
-                                Tap any pin above to view live block details
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Map Information Panel -->
-                    <div id="map-info-card" class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Selected Block Detail</span>
-                            <span id="map-block-tag" class="bg-emerald-600 text-white font-bold text-xs px-2.5 py-0.5 rounded-full">Mohana</span>
-                        </div>
-                        <h3 id="map-block-title" class="text-2xl font-black text-slate-900">Mohana Block</h3>
-                        <div class="space-y-3 text-sm">
-                            <div class="flex justify-between border-b border-emerald-200/60 pb-2">
-                                <span class="text-slate-600 font-medium">Major Crops:</span>
-                                <span id="map-block-crops" class="font-bold text-slate-900 text-right">Pineapple, Maize, Mango</span>
-                            </div>
-                            <div class="flex justify-between border-b border-emerald-200/60 pb-2">
-                                <span class="text-slate-600 font-medium">Avg Annual Rainfall:</span>
-                                <span id="map-block-rainfall" class="font-bold text-slate-900">1350 mm</span>
-                            </div>
-                            <div class="flex justify-between border-b border-emerald-200/60 pb-2">
-                                <span class="text-slate-600 font-medium">Nodal Extension Office:</span>
-                                <span id="map-block-office" class="font-bold text-slate-900 text-right">Mohana AAO Office</span>
-                            </div>
-                        </div>
-                        <button onclick="switchTab('marketplace')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition">
-                            View Farmers in this Block
-                        </button>
-                    </div>
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center font-bold"><i data-lucide="calculator" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold text-slate-900" id="card3-title">District Extension Tools</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed" id="card3-desc">Fertilizer & irrigation calculators tailored for red, forest, and Vansadhara river basin soil profiles, plus Participatory Rural Appraisal guides.</p>
+                    <button onclick="switchTab('tools')" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 gap-1 pt-2" id="card3-btn">Launch Tools <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
                 </div>
             </div>
         </section>
@@ -354,192 +217,63 @@
         <section id="sec-crops" class="tab-content hidden space-y-8">
             <div class="flex flex-col md:flex-row justify-between md:items-end gap-4 border-b border-slate-200 pb-6">
                 <div>
-                    <h1 class="text-3xl font-black text-slate-900">Gajapati Specialty Crop Wiki</h1>
-                    <p class="text-slate-600 text-sm mt-1">Sowing calendar, soil compatibility, and organic package of practices for Gajapati's signature agricultural & horticultural crops.</p>
-                </div>
-                <!-- Search & Filter -->
-                <div class="flex items-center gap-3">
-                    <input type="text" id="cropSearchInput" onkeyup="filterCropWiki()" placeholder="Search crops (e.g. Coffee, Turmeric, Mandia)..." class="bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64 shadow-sm">
+                    <h1 class="text-3xl font-black text-slate-900" id="wiki-title">Gajapati Specialty Crop Wiki</h1>
+                    <p class="text-slate-600 text-sm mt-1" id="wiki-subtitle">Sowing calendar, soil compatibility, and organic package of practices for Gajapati's signature agricultural & horticultural crops.</p>
                 </div>
             </div>
 
             <!-- Crop Cards Grid -->
             <div id="cropGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Crop 1: Hill Coffee -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
+                <!-- Crop 1: Coffee -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
                     <div class="flex justify-between items-start">
                         <div>
                             <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">R. Udayagiri & Chandragiri</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Chandragiri Arabica Coffee</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2" id="c1-title">Chandragiri Arabica Coffee</h3>
                             <p class="text-xs text-slate-500 font-mono">Coffee arabica L.</p>
                         </div>
-                        <div class="bg-amber-50 p-2 rounded-xl text-amber-700">
-                            <i data-lucide="coffee" class="w-6 h-6"></i>
-                        </div>
+                        <div class="bg-amber-50 p-2 rounded-xl text-amber-700"><i data-lucide="coffee" class="w-6 h-6"></i></div>
                     </div>
-                    <p class="text-slate-600 text-sm">Grown in high-altitude shade plantations in Chandragiri and R. Udayagiri hills intercropped with silver oak and pepper.</p>
+                    <p class="text-slate-600 text-sm" id="c1-desc">Grown in high-altitude shade plantations in Chandragiri and R. Udayagiri hills intercropped with silver oak and pepper.</p>
                     <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Optimal Sowing/Planting:</span>
-                            <span class="font-bold text-slate-800">June – August (Monsoon)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Deep, well-drained acidic soil (pH 6.0-6.5)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Harvest Period:</span>
-                            <span class="font-bold text-slate-800">November – February</span>
-                        </div>
+                        <div class="flex justify-between"><span class="text-slate-500">Sowing/Planting:</span><span class="font-bold text-slate-800" id="c1-sow">June – August (Monsoon)</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Harvest Period:</span><span class="font-bold text-slate-800" id="c1-harv">November – February</span></div>
                     </div>
                 </div>
 
-                <!-- Crop 2: Organic Turmeric -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
+                <!-- Crop 2: Turmeric -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
                     <div class="flex justify-between items-start">
                         <div>
                             <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full">Nuagada & Mohana</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Gajapati Organic Turmeric</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2" id="c2-title">Gajapati Organic Turmeric</h3>
                             <p class="text-xs text-slate-500 font-mono">Curcuma longa</p>
                         </div>
-                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700">
-                            <i data-lucide="sparkles" class="w-6 h-6"></i>
-                        </div>
+                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
                     </div>
-                    <p class="text-slate-600 text-sm">Renowned for high curcumin content and rich natural aroma. Grown organically without synthetic fertilizers by tribal farmers.</p>
+                    <p class="text-slate-600 text-sm" id="c2-desc">Renowned for high curcumin content and rich natural aroma. Grown organically without synthetic fertilizers by tribal farmers.</p>
                     <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Sowing Window:</span>
-                            <span class="font-bold text-slate-800">May – June (Pre-Monsoon)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Friable red loamy soil</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Harvest Period:</span>
-                            <span class="font-bold text-slate-800">January – March (9 Months)</span>
-                        </div>
+                        <div class="flex justify-between"><span class="text-slate-500">Sowing Window:</span><span class="font-bold text-slate-800" id="c2-sow">May – June (Pre-Monsoon)</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Harvest Period:</span><span class="font-bold text-slate-800" id="c2-harv">January – March</span></div>
                     </div>
                 </div>
 
                 <!-- Crop 3: Mandia (Ragi) -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
                     <div class="flex justify-between items-start">
                         <div>
                             <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full">Gumma & Rayagada</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Mandia / Finger Millet (Ragi)</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2" id="c3-title">Mandia / Finger Millet (Ragi)</h3>
                             <p class="text-xs text-slate-500 font-mono">Eleusine coracana</p>
                         </div>
-                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700">
-                            <i data-lucide="wheat" class="w-6 h-6"></i>
-                        </div>
+                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700"><i data-lucide="wheat" class="w-6 h-6"></i></div>
                     </div>
-                    <p class="text-slate-600 text-sm">Key crop under the Odisha Millet Mission. Highly climate-resilient crop requiring minimal water and resistant to pests.</p>
+                    <p class="text-slate-600 text-sm" id="c3-desc">Key crop under the Odisha Millet Mission. Highly climate-resilient crop requiring minimal water and resistant to pests.</p>
                     <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Sowing Window:</span>
-                            <span class="font-bold text-slate-800">July – August</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Red lateritic & light gravelly soil</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Harvest Period:</span>
-                            <span class="font-bold text-slate-800">October – November</span>
-                        </div>
+                        <div class="flex justify-between"><span class="text-slate-500">Sowing Window:</span><span class="font-bold text-slate-800" id="c3-sow">July – August</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Harvest Period:</span><span class="font-bold text-slate-800" id="c3-harv">October – November</span></div>
                     </div>
                 </div>
-
-                <!-- Crop 4: Mohana Pineapple -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full">Mohana & R. Udayagiri</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Mohana Queen Pineapple</h3>
-                            <p class="text-xs text-slate-500 font-mono">Ananas comosus</p>
-                        </div>
-                        <div class="bg-amber-50 p-2 rounded-xl text-amber-700">
-                            <i data-lucide="sun" class="w-6 h-6"></i>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 text-sm">Juicy, sweet pineapple variety cultivated across sloped hill tracts of Mohana block with direct market linkage to Berhampur and Bhubaneswar.</p>
-                    <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Suckers Planting:</span>
-                            <span class="font-bold text-slate-800">July – September</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Sandy loam with high organic matter</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Peak Harvest:</span>
-                            <span class="font-bold text-slate-800">May – July</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Crop 5: Hill Cashew Nut -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full">Rayagada & Gosani</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Gajapati Raw Cashew</h3>
-                            <p class="text-xs text-slate-500 font-mono">Anacardium occidentale</p>
-                        </div>
-                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700">
-                            <i data-lucide="tree-pine" class="w-6 h-6"></i>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 text-sm">Extensively grown on hill slopes to prevent soil erosion while providing substantial seasonal income to tribal households.</p>
-                    <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Planting Window:</span>
-                            <span class="font-bold text-slate-800">June – August</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Red laterite soils</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Harvest Period:</span>
-                            <span class="font-bold text-slate-800">March – May</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Crop 6: Vansadhara Basin Paddy -->
-                <div class="crop-card bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full">Paralakhemundi & Kashinagar</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-2">Vansadhara Alluvial Paddy</h3>
-                            <p class="text-xs text-slate-500 font-mono">Oryza sativa</p>
-                        </div>
-                        <div class="bg-emerald-50 p-2 rounded-xl text-emerald-700">
-                            <i data-lucide="droplets" class="w-6 h-6"></i>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 text-sm">High-yielding paddy cultivation supported by canal irrigation from Vansadhara river in the southern plains of Gajapati.</p>
-                    <div class="bg-slate-50 p-3 rounded-xl space-y-2 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Kharif Sowing:</span>
-                            <span class="font-bold text-slate-800">June – July</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Soil Requirement:</span>
-                            <span class="font-bold text-slate-800">Clay loam & alluvial deposit</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500">Harvest Period:</span>
-                            <span class="font-bold text-slate-800">November – December</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
@@ -547,454 +281,298 @@
         <section id="sec-marketplace" class="tab-content hidden space-y-8">
             <div class="flex flex-col md:flex-row justify-between md:items-end gap-4 border-b border-slate-200 pb-6">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-3xl font-black text-slate-900">Direct Tribal & SHG Farm Market</h1>
-                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Fair Price INR (₹)</span>
-                    </div>
-                    <p class="text-slate-600 text-sm mt-1">Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Gajapati with zero middleman markup.</p>
+                    <h1 class="text-3xl font-black text-slate-900" id="market-title">Direct Tribal & SHG Farm Market</h1>
+                    <p class="text-slate-600 text-sm mt-1" id="market-subtitle">Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Gajapati with zero middleman markup.</p>
                 </div>
                 <button onclick="openModal('listCropModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
-                    <i data-lucide="plus" class="w-4 h-4"></i> List Harvest / Produce
+                    <i data-lucide="plus" class="w-4 h-4"></i> <span id="m-add-btn">List Produce</span>
                 </button>
             </div>
 
-            <!-- Marketplace Filter Bar -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500 uppercase">Block Filter:</span>
-                    <button onclick="filterMarket('All')" class="market-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white">All Blocks</button>
-                    <button onclick="filterMarket('Mohana')" class="market-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-emerald-50">Mohana</button>
-                    <button onclick="filterMarket('R. Udayagiri')" class="market-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-emerald-50">R. Udayagiri</button>
-                    <button onclick="filterMarket('Gumma')" class="market-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-emerald-50">Gumma</button>
-                    <button onclick="filterMarket('Nuagada')" class="market-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-emerald-50">Nuagada</button>
-                </div>
-                <div class="text-xs text-slate-500">
-                    Showing <span id="market-count" class="font-bold text-slate-800">4</span> Verified Producer Listings
-                </div>
-            </div>
-
-            <!-- Marketplace Cards Grid -->
-            <div id="marketGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- Item 1 -->
-                <div class="market-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-block="R. Udayagiri">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
                     <div class="p-5 space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">R. Udayagiri Block</span>
-                            <span class="text-slate-400 text-xs">Fresh Harvest</span>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-lg">Shade-Grown Arabica Coffee Beans</h3>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">R. Udayagiri Block</span>
+                        <h3 class="font-bold text-slate-900 text-lg" id="m1-title">Shade-Grown Arabica Coffee Beans</h3>
                         <p class="text-xs text-slate-500">Mahendragiri Producer Group • Chandragiri</p>
                         <div class="bg-slate-50 p-3 rounded-xl">
-                            <div class="text-xs text-slate-500">Price / Quantity</div>
                             <div class="text-2xl font-black text-emerald-700">₹320 <span class="text-xs font-normal text-slate-500">/ Kg</span></div>
-                            <div class="text-[11px] text-slate-600 mt-1">Available Stock: 450 Kg</div>
                         </div>
                     </div>
                     <div class="p-5 pt-0">
-                        <button onclick="orderItem('Shade-Grown Arabica Coffee Beans', 'Mahendragiri Producer Group')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
+                        <button onclick="alert('Contacting Producer SHG...')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5" id="m1-btn">
                             <i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG
                         </button>
                     </div>
                 </div>
 
-                <!-- Item 2 -->
-                <div class="market-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-block="Nuagada">
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
                     <div class="p-5 space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Nuagada Block</span>
-                            <span class="text-slate-400 text-xs">Organic Certified</span>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-lg">Pure Raw Organic Turmeric Rhizomes</h3>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Nuagada Block</span>
+                        <h3 class="font-bold text-slate-900 text-lg" id="m2-title">Pure Raw Organic Turmeric Rhizomes</h3>
                         <p class="text-xs text-slate-500">Maa Thakurani WSHG • Nuagada</p>
                         <div class="bg-slate-50 p-3 rounded-xl">
-                            <div class="text-xs text-slate-500">Price / Quantity</div>
                             <div class="text-2xl font-black text-emerald-700">₹85 <span class="text-xs font-normal text-slate-500">/ Kg</span></div>
-                            <div class="text-[11px] text-slate-600 mt-1">Available Stock: 1,200 Kg</div>
                         </div>
                     </div>
                     <div class="p-5 pt-0">
-                        <button onclick="orderItem('Pure Raw Organic Turmeric Rhizomes', 'Maa Thakurani WSHG')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
+                        <button onclick="alert('Contacting Producer SHG...')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5" id="m2-btn">
                             <i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG
                         </button>
                     </div>
                 </div>
 
-                <!-- Item 3 -->
-                <div class="market-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-block="Mohana">
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
                     <div class="p-5 space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Mohana Block</span>
-                            <span class="text-slate-400 text-xs">Sweet Queen Var.</span>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-lg">Fresh Mohana Hill Pineapples</h3>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Mohana Block</span>
+                        <h3 class="font-bold text-slate-900 text-lg" id="m3-title">Fresh Mohana Hill Pineapples</h3>
                         <p class="text-xs text-slate-500">Jiranga Farmers Collective • Mohana</p>
                         <div class="bg-slate-50 p-3 rounded-xl">
-                            <div class="text-xs text-slate-500">Price / Quantity</div>
                             <div class="text-2xl font-black text-emerald-700">₹35 <span class="text-xs font-normal text-slate-500">/ Piece</span></div>
-                            <div class="text-[11px] text-slate-600 mt-1">Available Stock: 800 Pieces</div>
                         </div>
                     </div>
                     <div class="p-5 pt-0">
-                        <button onclick="orderItem('Fresh Mohana Hill Pineapples', 'Jiranga Farmers Collective')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
+                        <button onclick="alert('Contacting Producer SHG...')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5" id="m3-btn">
                             <i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG
                         </button>
                     </div>
                 </div>
-
-                <!-- Item 4 -->
-                <div class="market-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between" data-block="Gumma">
-                    <div class="p-5 space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Gumma Block</span>
-                            <span class="text-slate-400 text-xs">Millet Mission</span>
-                        </div>
-                        <h3 class="font-bold text-slate-900 text-lg">Cleaned Mandia (Finger Millet)</h3>
-                        <p class="text-xs text-slate-500">Gumma Tribal Millet FPO</p>
-                        <div class="bg-slate-50 p-3 rounded-xl">
-                            <div class="text-xs text-slate-500">Price / Quantity</div>
-                            <div class="text-2xl font-black text-emerald-700">₹42 <span class="text-xs font-normal text-slate-500">/ Kg</span></div>
-                            <div class="text-[11px] text-slate-600 mt-1">Available Stock: 2,500 Kg</div>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0">
-                        <button onclick="orderItem('Cleaned Mandia (Finger Millet)', 'Gumma Tribal Millet FPO')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
-                            <i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </section>
 
         <!-- ================= SECTION 4: WEATHER & ADVISORIES ================= -->
         <section id="sec-weather" class="tab-content hidden space-y-8">
             <div class="border-b border-slate-200 pb-6">
-                <h1 class="text-3xl font-black text-slate-900">Gajapati Weather & Block Forecast</h1>
-                <p class="text-slate-600 text-sm mt-1">Real-time localized meteorological advisory for Gajapati hilly terrain & Vansadhara basin.</p>
+                <h1 class="text-3xl font-black text-slate-900" id="w-title">Gajapati Weather & Block Forecast</h1>
+                <p class="text-slate-600 text-sm mt-1" id="w-subtitle">Real-time localized meteorological advisory for Gajapati hilly terrain & Vansadhara basin.</p>
             </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Current Block Station Status -->
-                <div class="bg-gradient-to-br from-emerald-800 to-slate-900 text-white rounded-3xl p-6 shadow-xl space-y-6">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-emerald-300 font-mono uppercase">Primary Station</span>
-                            <h2 class="text-2xl font-bold">Paralakhemundi HQ</h2>
-                        </div>
-                        <i data-lucide="cloud-sun" class="w-10 h-10 text-amber-400"></i>
-                    </div>
-
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-5xl font-black">29°C</span>
-                        <span class="text-slate-300 text-sm">Partly Cloudy</span>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-emerald-700/50 text-xs">
-                        <div>
-                            <span class="text-slate-400 block">Humidity</span>
-                            <span class="font-bold text-sm">78%</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Wind Speed</span>
-                            <span class="font-bold text-sm">12 km/h (SE)</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Elevation</span>
-                            <span class="font-bold text-sm">145m ASL</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Rain Probability</span>
-                            <span class="font-bold text-sm">40% Today</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-emerald-900/60 border border-emerald-500/30 p-4 rounded-2xl text-xs space-y-1">
-                        <span class="text-emerald-400 font-bold block">Mahendragiri Hill Runoff Alert:</span>
-                        <p class="text-slate-300">Light to moderate precipitation expected in eastern hill slopes. Ensure soil bunds are intact for cashew orchards.</p>
-                    </div>
-                </div>
-
-                <!-- 5-Day District Forecast Table -->
-                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-6">
-                    <h3 class="text-xl font-bold text-slate-900">5-Day Block Forecast Summary</h3>
-                    
-                    <div class="space-y-3">
-                        <!-- Day 1 -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition text-sm">
-                            <div class="flex items-center gap-3 w-32">
-                                <i data-lucide="cloud-rain" class="w-5 h-5 text-emerald-600"></i>
-                                <span class="font-bold text-slate-800">Today</span>
-                            </div>
-                            <span class="text-slate-600 text-xs hidden sm:inline">Light Rain (Mohana/R. Udayagiri)</span>
-                            <div class="font-bold text-slate-900">29° / 22°C</div>
-                        </div>
-                        <!-- Day 2 -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition text-sm">
-                            <div class="flex items-center gap-3 w-32">
-                                <i data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
-                                <span class="font-bold text-slate-800">Tomorrow</span>
-                            </div>
-                            <span class="text-slate-600 text-xs hidden sm:inline">Clear Sunny (Kashinagar)</span>
-                            <div class="font-bold text-slate-900">31° / 21°C</div>
-                        </div>
-                        <!-- Day 3 -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition text-sm">
-                            <div class="flex items-center gap-3 w-32">
-                                <i data-lucide="cloud-sun" class="w-5 h-5 text-emerald-600"></i>
-                                <span class="font-bold text-slate-800">Thursday</span>
-                            </div>
-                            <span class="text-slate-600 text-xs hidden sm:inline">Partly Cloudy across district</span>
-                            <div class="font-bold text-slate-900">30° / 22°C</div>
-                        </div>
-                        <!-- Day 4 -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition text-sm">
-                            <div class="flex items-center gap-3 w-32">
-                                <i data-lucide="cloud-lightning" class="w-5 h-5 text-amber-600"></i>
-                                <span class="font-bold text-slate-800">Friday</span>
-                            </div>
-                            <span class="text-slate-600 text-xs hidden sm:inline">Thunderstorms in hill blocks</span>
-                            <div class="font-bold text-slate-900">27° / 20°C</div>
-                        </div>
-                        <!-- Day 5 -->
-                        <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition text-sm">
-                            <div class="flex items-center gap-3 w-32">
-                                <i data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
-                                <span class="font-bold text-slate-800">Saturday</span>
-                            </div>
-                            <span class="text-slate-600 text-xs hidden sm:inline">Sunny & Warm</span>
-                            <div class="font-bold text-slate-900">32° / 23°C</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="bg-gradient-to-br from-emerald-800 to-slate-900 text-white rounded-3xl p-6 shadow-xl space-y-4">
+                <h2 class="text-2xl font-bold">Paralakhemundi HQ Station: 29°C</h2>
+                <p class="text-sm text-slate-300" id="w-desc">Mahendragiri Hill Runoff Alert: Light to moderate rainfall expected in eastern hill slopes.</p>
             </div>
         </section>
 
         <!-- ================= SECTION 5: AGRONOMY TOOLS ================= -->
         <section id="sec-tools" class="tab-content hidden space-y-8">
             <div class="border-b border-slate-200 pb-6">
-                <h1 class="text-3xl font-black text-slate-900">Gajapati Extension Tools & Calculators</h1>
-                <p class="text-slate-600 text-sm mt-1">Calculators optimized for Gajapati soil types (red lateritic, alluvial, hill forest soils).</p>
+                <h1 class="text-3xl font-black text-slate-900" id="t-title">Gajapati Agronomy Tools & Calculators</h1>
+                <p class="text-slate-600 text-sm mt-1" id="t-subtitle">Calculators optimized for Gajapati soil types and crop varieties.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- Tool 1: Organic & NPK Calculator -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-6">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-emerald-100 p-3 rounded-2xl text-emerald-700">
-                            <i data-lucide="calculator" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-lg">Fertilizer & Organic Manure Estimator</h3>
-                            <p class="text-xs text-slate-500">Calculate FYM / Organic Compost per Acre</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Select Crop</label>
-                            <select id="calcCrop" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <option value="turmeric">Gajapati Organic Turmeric</option>
-                                <option value="ragi">Mandia / Finger Millet</option>
-                                <option value="coffee">Chandragiri Arabica Coffee</option>
-                                <option value="paddy">Vansadhara Paddy</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Land Area (in Acres)</label>
-                            <input type="number" id="calcArea" value="1" min="0.5" step="0.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-
-                        <button onclick="calculateFertilizer()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-md">
-                            Calculate Required Dosage
-                        </button>
-
-                        <div id="calcResult" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-2xl space-y-2 text-xs">
-                            <span class="font-bold text-emerald-900 block text-sm">Recommended Dosage:</span>
-                            <div class="flex justify-between text-slate-700">
-                                <span>Organic FYM / Vermicompost:</span>
-                                <span id="resFYM" class="font-bold text-slate-900">4.0 Tons</span>
-                            </div>
-                            <div class="flex justify-between text-slate-700">
-                                <span>Bio-Fertilizer (Azospirillum):</span>
-                                <span id="resBio" class="font-bold text-slate-900">2.0 Kg</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tool 2: Plant Diagnostic Helper -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-6">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-amber-100 p-3 rounded-2xl text-amber-700">
-                            <i data-lucide="stethoscope" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-lg">Crop Symptom Diagnostic Helper</h3>
-                            <p class="text-xs text-slate-500">Quick field identification for Gajapati crops</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4 text-sm">
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Select Observed Symptom</label>
-                            <select id="diagSymptom" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <option value="leaf_spot">Yellowing leaf spots on Turmeric / Ginger</option>
-                                <option value="coffee_rust">Orange powdery spots under Coffee leaves</option>
-                                <option value="millet_blast">Spindle-shaped lesions on Mandia / Millet</option>
-                            </select>
-                        </div>
-
-                        <button onclick="diagnoseIssue()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl transition shadow-md">
-                            Get Diagnostic & Organic Remedy
-                        </button>
-
-                        <div id="diagResult" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-2xl space-y-2 text-xs">
-                            <span id="diagTitle" class="font-bold text-amber-900 block text-sm">Suspected Issue: Leaf Blight</span>
-                            <p id="diagDesc" class="text-slate-700 leading-relaxed">Spray Neem Oil solution (5ml/L) or Trichoderma viride culture. Ensure proper drainage in beds.</p>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 max-w-xl">
+                <h3 class="font-bold text-lg" id="t-calc-title">Organic Fertilizer Estimator</h3>
+                <label class="block text-sm font-semibold">Land Area (Acres)</label>
+                <input type="number" id="calcArea" value="1" class="w-full border p-2 rounded-xl">
+                <button onclick="alert('Recommendation: 4 Tons FYM Organic Compost')" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl" id="t-calc-btn">Calculate</button>
             </div>
         </section>
 
-        <!-- ================= SECTION 6: EXTENSION & PRA GUIDES ================= -->
+        <!-- ================= SECTION 6: EXTENSION GUIDES ================= -->
         <section id="sec-extension" class="tab-content hidden space-y-8">
             <div class="border-b border-slate-200 pb-6">
-                <h1 class="text-3xl font-black text-slate-900">PRA & Tribal Extension Frameworks</h1>
-                <p class="text-slate-600 text-sm mt-1">Participatory Rural Appraisal (PRA) tools and government scheme integration guidelines tailored for Gajapati.</p>
+                <h1 class="text-3xl font-black text-slate-900" id="ext-title">PRA & Extension Frameworks</h1>
+                <p class="text-slate-600 text-sm mt-1" id="ext-subtitle">Participatory Rural Appraisal (PRA) guides tailored for tribal hamlets in Gajapati.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Guide 1 -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-                    <div class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">PRA Methodology</div>
-                    <h3 class="text-xl font-bold text-slate-900">Transect Walk in Hilly Tribal Hamlets</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        A systematic walk with tribal elders from hilltop Podu fields to valley bottom paddy lands to map soil erosion zones, natural streams, and traditional crop diversity.
-                    </p>
-                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-                        <li>Identify hill slope runoff points in Mohana & Gumma.</li>
-                        <li>Map natural springs for community micro-irrigation.</li>
-                        <li>Document local indigenous seed varieties.</li>
-                    </ul>
-                </div>
-
-                <!-- Guide 2 -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-                    <div class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Odisha Govt Scheme</div>
-                    <h3 class="text-xl font-bold text-slate-900">Odisha Millet Mission (OMM) Integration</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Guidelines for WSHGs and FPOs in Gajapati to register under the Odisha Millet Mission for direct procurement incentives and processing unit support.
-                    </p>
-                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-                        <li>Incentives up to ₹12,000 / hectare over 3 years.</li>
-                        <li>Support for setting up local Mandia processing thresher units.</li>
-                    </ul>
-                </div>
+            <div class="bg-white border p-6 rounded-2xl shadow-sm">
+                <h3 class="font-bold text-xl" id="ext-c1-title">Odisha Millet Mission (OMM) Integration</h3>
+                <p class="text-slate-600 text-sm mt-2" id="ext-c1-desc">Guidelines for WSHGs and FPOs in Gajapati to register under the Odisha Millet Mission for direct procurement incentives.</p>
             </div>
         </section>
 
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 text-sm py-12 mt-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-emerald-600 p-2 rounded-xl text-white">
-                        <i data-lucide="sprout" class="w-6 h-6"></i>
-                    </div>
-                    <span class="font-bold text-xl text-white">Gajapati Krushi Connect</span>
-                </div>
-                <div class="flex flex-wrap gap-6 text-xs font-medium">
-                    <button onclick="switchTab('home')" class="hover:text-emerald-400">Home</button>
-                    <button onclick="switchTab('crops')" class="hover:text-emerald-400">Crop Wiki</button>
-                    <button onclick="switchTab('marketplace')" class="hover:text-emerald-400">Tribal D2C Market</button>
-                    <button onclick="switchTab('weather')" class="hover:text-emerald-400">Weather</button>
-                    <button onclick="switchTab('tools')" class="hover:text-emerald-400">Agronomy Tools</button>
-                </div>
-            </div>
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p>© 2026 Gajapati Krushi Connect • Open-Source Digital Agricultural Portal for Gajapati District, Odisha.</p>
-                <p class="text-slate-500">Ama Krushi Helpline: 155333 | KVK Gajapati</p>
-            </div>
-        </div>
+    <footer class="bg-slate-900 text-slate-400 text-sm py-8 border-t border-slate-800 text-center">
+        <p id="footer-text">© 2026 Gajapati Krushi Connect • Ama Krushi Helpline: 155333 | KVK Gajapati</p>
     </footer>
 
-    <!-- MODAL: LIST CROP / PRODUCE -->
-    <div id="listCropModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative">
-            <div class="flex justify-between items-center border-b border-slate-200 pb-4">
-                <h3 class="font-bold text-lg text-slate-900">List Produce on Tribal D2C Market</h3>
-                <button onclick="closeModal('listCropModal')" class="text-slate-400 hover:text-slate-600 p-1">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <form onsubmit="handleListProduce(event)" class="space-y-4 text-sm">
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Crop / Produce Name</label>
-                    <input type="text" required placeholder="e.g. Organic Turmeric, Arabica Coffee" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Gajapati Block</label>
-                        <select class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                            <option>Mohana</option>
-                            <option>R. Udayagiri</option>
-                            <option>Gumma</option>
-                            <option>Nuagada</option>
-                            <option>Paralakhemundi</option>
-                            <option>Rayagada</option>
-                            <option>Kashinagar</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Price in INR (₹/Kg)</label>
-                        <input type="number" required placeholder="e.g. 85" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Producer Group / SHG Name</label>
-                    <input type="text" required placeholder="e.g. Maa Mangala WSHG" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Contact Phone Number</label>
-                    <input type="tel" required placeholder="e.g. +91 94370 XXXXX" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition shadow-md">
-                    Submit Listing
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT CONTROLLER -->
+    <!-- LANGUAGE SWITCHER CONTROLLER -->
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Navigation Tab Switcher
+        let currentLang = 'en';
+
+        const i18n = {
+            en: {
+                siteTitle: 'Gajapati<span class="text-emerald-600">Krushi</span>',
+                siteSubtitle: 'Digital Agriculture & D2C Tribal Agri-Portal',
+                langText: 'ଓଡ଼ିଆ',
+                bannerText: '<strong>Gajapati Agromet Advisory:</strong> High elevation rainfall predicted in Mohana & R. Udayagiri blocks. Ensure drainage in Hill Coffee & Pineapple fields. Ama Krushi Helpline: <strong>155333</strong>',
+                sellBtnText: 'Sell Produce',
+                navHome: 'Home', navCrops: 'Crop Wiki', navMarket: 'Tribal Market', navWeather: 'Weather', navTools: 'Agronomy Tools', navExt: 'PRA Guides',
+                heroTag: 'Gajapati District • Paralakhemundi • Mohana • R. Udayagiri',
+                heroTitle: 'Empowering Gajapati’s Farmers with Open Tech & Direct Markets',
+                heroDesc: 'A unified digital agriculture network connecting hill coffee growers, organic turmeric farmers, millet SHGs, and local agronomists across 7 blocks of Gajapati District, Odisha.',
+                heroBtnMarket: '<i data-lucide="shopping-bag" class="w-5 h-5"></i> Explore Local Produce',
+                heroBtnWiki: '<i data-lucide="book-open" class="w-5 h-5"></i> Gajapati Sowing Wiki',
+                blockTitle: 'Gajapati District Agricultural Blocks',
+                blockSubtitle: 'Select a block to filter local crop profiles, weather advisories, and SHG producers.',
+                blockBadge: '7 Administrative Blocks',
+                b1Desc: 'HQ / Paddy', b2Desc: 'Pineapple & Maize', b3Desc: 'Coffee & Spices', b4Desc: 'Cashew Produce', b5Desc: 'Mandia / Millet', b6Desc: 'Organic Turmeric', b7Desc: 'Vansadhara Paddy',
+                card1Title: 'Gajapati Specialty Wiki', card1Desc: 'Complete agro-climatic guide for Chandragiri Arabica Coffee, Organic Turmeric, Mohana Pineapple, and Ragi.', card1Btn: 'View Gajapati Crops',
+                card2Title: 'Direct Tribal & SHG Market', card2Desc: 'Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Paralakhemundi & Mohana without middleman markups.', card2Btn: 'Browse Market',
+                card3Title: 'District Extension Tools', card3Desc: 'Fertilizer & irrigation calculators tailored for red, forest, and Vansadhara river basin soil profiles.', card3Btn: 'Launch Tools',
+                wikiTitle: 'Gajapati Specialty Crop Wiki', wikiSubtitle: 'Sowing calendar, soil compatibility, and organic package of practices for Gajapati signature crops.',
+                c1Title: 'Chandragiri Arabica Coffee', c1Desc: 'Grown in high-altitude shade plantations in Chandragiri and R. Udayagiri hills intercropped with silver oak and pepper.', c1Sow: 'June – August (Monsoon)', c1Harv: 'November – February',
+                c2Title: 'Gajapati Organic Turmeric', c2Desc: 'Renowned for high curcumin content and rich natural aroma. Grown organically without synthetic fertilizers.', c2Sow: 'May – June (Pre-Monsoon)', c2Harv: 'January – March',
+                c3Title: 'Mandia / Finger Millet (Ragi)', c3Desc: 'Key crop under the Odisha Millet Mission. Climate-resilient crop requiring minimal water.', c3Sow: 'July – August', c3Harv: 'October – November',
+                marketTitle: 'Direct Tribal & SHG Farm Market', marketSubtitle: 'Buy directly from Mission Shakti WSHGs and tribal farmer collectives in Gajapati with zero middleman markup.', mAddBtn: 'List Produce',
+                m1Title: 'Shade-Grown Arabica Coffee Beans', m1Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG',
+                m2Title: 'Pure Raw Organic Turmeric Rhizomes', m2Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG',
+                m3Title: 'Fresh Mohana Hill Pineapples', m3Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact Producer SHG',
+                wTitle: 'Gajapati Weather & Block Forecast', wSubtitle: 'Real-time localized meteorological advisory for Gajapati hilly terrain & Vansadhara basin.', wDesc: 'Mahendragiri Hill Runoff Alert: Light to moderate rainfall expected in eastern hill slopes.',
+                tTitle: 'Gajapati Agronomy Tools & Calculators', tSubtitle: 'Calculators optimized for Gajapati soil types and crop varieties.', tCalcTitle: 'Organic Fertilizer Estimator', tCalcBtn: 'Calculate',
+                extTitle: 'PRA & Extension Frameworks', extSubtitle: 'Participatory Rural Appraisal (PRA) guides tailored for tribal hamlets in Gajapati.', extC1Title: 'Odisha Millet Mission (OMM) Integration', extC1Desc: 'Guidelines for WSHGs and FPOs in Gajapati to register under the Odisha Millet Mission for direct procurement incentives.',
+                footerText: '© 2026 Gajapati Krushi Connect • Ama Krushi Helpline: 155333 | KVK Gajapati'
+            },
+            or: {
+                siteTitle: 'ଗଜପତି<span class="text-emerald-600">କୃଷି</span>',
+                siteSubtitle: 'ଡିଜିଟାଲ୍ କୃଷି ଓ ଆଦିବାସୀ ମାର୍କେଟ୍ ପୋର୍ଟାଲ୍',
+                langText: 'English',
+                bannerText: '<strong>ଗଜପତି କୃଷି ସୂଚନା:</strong> ମୋହନା ଏବଂ ଆର. ଉଦୟଗିରି ବ୍ଲକରେ ବର୍ଷା ସମ୍ଭାବନା। କଫି ଓ ପାଇନାପଲ୍ କ୍ଷେତରେ ଜଳ ନିଷ୍କାସନ ବ୍ୟବସ୍ଥା କରନ୍ତୁ। ଆମ କୃଷି ହେଲ୍ପଲାଇନ୍: <strong>155333</strong>',
+                sellBtnText: 'ଫସଲ ବିକ୍ରି କରନ୍ତୁ',
+                navHome: 'ମୁଖ୍ୟ ପୃଷ୍ଠା', navCrops: 'କୃଷି ୱିକି', navMarket: 'ସହାୟକ ମାର୍କେଟ', navWeather: 'ପାଣିପାଗ', navTools: 'କୃଷି ଯନ୍ତ୍ର', navExt: 'ପ୍ରସାର ଗାଇଡ୍',
+                heroTag: 'ଗଜପତି ଜିଲ୍ଲା • ପାରଳାଖେମୁଣ୍ଡି • ମୋହନା • ଆର. ଉଦୟଗିରି',
+                heroTitle: 'ଗଜପତିର ଚାଷୀମାନଙ୍କୁ ଡିଜିଟାଲ୍ ଟେକ୍ନୋଲୋଜି ଓ ସିଧାସଳଖ ବଜାର ସହ ଯୋଡ଼ିବା',
+                heroDesc: 'ଗଜପତି ଜିଲ୍ଲାର ୭ଟି ବ୍ଲକର କଫି ଚାଷୀ, ଜୈବିକ ହଳଦୀ ଚାଷୀ, ମାଣ୍ଡିଆ ମହିଳା ସ୍ୱୟଂ ସହାୟକ ଗୋଷ୍ଠୀ ଏବଂ କୃଷି ବିଶେଷଜ୍ଞଙ୍କୁ ଏକତ୍ରିତ କରୁଥିବା ଏକ ଖୋଲା ଡିଜିଟାଲ୍ ପ୍ଲାଟଫର୍ମ।',
+                heroBtnMarket: '<i data-lucide="shopping-bag" class="w-5 h-5"></i> ସ୍ଥାନୀୟ ଉତ୍ପାଦ ଦେଖନ୍ତୁ',
+                heroBtnWiki: '<i data-lucide="book-open" class="w-5 h-5"></i> ଗଜପତି ବୁଣାବୁଣି ଗାଇଡ୍',
+                blockTitle: 'ଗଜପତି ଜିଲ୍ଲାର କୃଷି ବ୍ଲକ୍ ସମୂହ',
+                blockSubtitle: 'ଆପଣଙ୍କ ବ୍ଲକ୍ ଚୟନ କରି ସ୍ଥାନୀୟ ଫସଲ ଓ ପାଣିପାଗ ସୂଚନା ଦେଖନ୍ତୁ।',
+                blockBadge: '୭ ଟି ପ୍ରଶାସନିକ ବ୍ଲକ୍',
+                b1Desc: 'ସଦର ମହକୁମା / ଧାନ', b2Desc: 'ସପୁରୀ ଓ ମକା', b3Desc: 'କଫି ଓ ମସଲା', b4Desc: 'କାଜୁ ଉତ୍ପାଦନ', b5Desc: 'ମାଣ୍ଡିଆ / ମିଲେଟ୍', b6Desc: 'ଜୈବିକ ହଳଦୀ', b7Desc: 'ବଂଶଧାରା ବେସିନ୍ ଧାନ',
+                card1Title: 'ଗଜପତି ବିଶେଷ ଫସଲ ୱିକି', card1Desc: 'ଚନ୍ଦ୍ରଗିରି ଆରାବିକା କଫି, ଜୈବିକ ହଳଦୀ, ମୋହନା ସପୁରୀ, ଏବଂ ମାଣ୍ଡିଆ ଚାଷର ସମ୍ପୂର୍ଣ୍ଣ ସୂଚନା।', card1Btn: 'ଫସଲ ବିବରଣୀ ଦେଖନ୍ତୁ',
+                card2Title: 'ସିଧାସଳଖ ମହିଳା ଏସଏଚଜି ମାର୍କେଟ୍', card2Desc: 'ମିଶନ ଶକ୍ତି ଏସଏଚଜି ଏବଂ ଆଦିବାସୀ କୃଷକ ସଂଘରୁ ଦଲାଲମୁକ୍ତ ସିଧାସଳଖ କ୍ରୟ କରନ୍ତୁ।', card2Btn: 'ବଜାର ପରିଦର୍ଶନ କରନ୍ତୁ',
+                card3Title: 'ଜିଲ୍ଲା କୃଷି କାଲକୁଲେଟର', card3Desc: 'ଗଜପତିର ଲାଲ୍ ଓ ପାହାଡ଼ି ମାଟି ପାଇଁ ବିଶେଷ ଖତ ଓ ସାର କାଲକୁଲେଟର।', card3Btn: 'ଟୁଲ୍ ବ୍ୟବହାର କରନ୍ତୁ',
+                wikiTitle: 'ଗଜପତି ବିଶେଷ ଫସଲ ୱିକି', wikiSubtitle: 'ଗଜପତି ଜିଲ୍ଲାର ମୁଖ୍ୟ ଫସଲ ସମୂହର ବୁଣାବୁଣି ଓ ଅମଳ ସମୟସାରଣୀ।',
+                c1Title: 'ଚନ୍ଦ୍ରଗିରି ଆରାବିକା କଫି', c1Desc: 'ଚନ୍ଦ୍ରଗିରି ଏବଂ ଆର. ଉଦୟଗିରି ପାହାଡ଼ି ଅଞ୍ଚଳର ଛାୟାବୃକ୍ଷ ତଳେ ଚାଷ କରାଯାଉଥିବା ଉଚ୍ଚମାନର କଫି।', c1Sow: 'ଜୁନ୍ – ଅଗଷ୍ଟ (ବର୍ଷା ଦିନ)', c1Harv: 'ନଭେମ୍ବର – ଫେବୃଆରୀ',
+                c2Title: 'ଗଜପତି ଜୈବିକ ହଳଦୀ', c2Desc: 'ଉଚ୍ଚ କର୍କୁମିନ୍ ଯୁକ୍ତ ଓ ସୁବାସିତ ଜୈବିକ ହଳଦୀ। କୌଣସି ରାସାୟନିକ ସାର ବିନା ଚାଷ କରାଯାଏ।', c2Sow: 'ମଇ – ଜୁନ୍', c2Harv: 'ଜାନୁଆରୀ – ମାର୍ଚ୍ଚ',
+                c3Title: 'ମାଣ୍ଡିଆ (ଫିଙ୍ଗର ମିଲେଟ୍)', c3Desc: 'ଓଡ଼ିଶା ମିଲେଟ୍ ମିଶନ୍ ଅଧୀନରେ ପ୍ରମୁଖ ପୃଷ୍ଟିକର ଫସଲ। କମ୍ ଜଳ ଆବଶ୍ୟକ କରେ।', c3Sow: 'ଜୁଲାଇ – ଅଗଷ୍ଟ', c3Harv: 'ଅକ୍ଟୋବର – ନଭେମ୍ବର',
+                marketTitle: 'ସିଧାସଳଖ ଆଦିବାସୀ ଓ ଏସଏଚଜି ବଜାର', marketSubtitle: 'ଗଜପତିର ମିଶନ ଶକ୍ତି ସ୍ୱୟଂ ସହାୟକ ଗୋଷ୍ଠୀଙ୍କଠାରୁ ସିଧାସଳଖ ଉଚିତ୍ ମୂଲ୍ୟରେ କ୍ରୟ କରନ୍ତୁ।', mAddBtn: 'ଫସଲ ତାଲିକାଭୁକ୍ତ କରନ୍ତୁ',
+                m1Title: 'ଆରାବିକା କଫି ମଞ୍ଜି', m1Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> ଚାଷୀ ଦଳ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                m2Title: 'କଞ୍ଚା ଜୈବିକ ହଳଦୀ', m2Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> ଚାଷୀ ଦଳ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                m3Title: 'ମୋହନା ପାହାଡ଼ି ସପୁରୀ', m3Btn: '<i data-lucide="phone" class="w-3.5 h-3.5"></i> ଚାଷୀ ଦଳ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ',
+                wTitle: 'ଗଜପତି ପାଣିପାଗ ଓ ପୂର୍ବାନୁମାନ', wSubtitle: 'ଗଜପତିର ପାହାଡ଼ିଆ ଅଞ୍ଚଳ ଓ ବଂଶଧାରା ଅବବାହିକା ପାଇଁ ସ୍ଥାନୀୟ ପାଣିପାଗ ସୂଚନା।', wDesc: 'ମହେନ୍ଦ୍ରଗିରି ପାହାଡ଼ି ଅଞ୍ଚଳ ସୂଚନା: ହାଲୁକାରୁ ମଧ୍ୟମ ଧରଣର ବର୍ଷା ସମ୍ଭାବନା।',
+                tTitle: 'ଗଜପତି କୃଷି ଯନ୍ତ୍ର ଓ କାଲକୁଲେଟର', tSubtitle: 'ଗଜପତିର ମୃତ୍ତିକା ଅନୁସାରେ ଖତ ଓ ସାର ଆକଳନ କାଲକୁଲେଟର।', tCalcTitle: 'ଜୈବିକ ଖତ କାଲକୁଲେଟର', tCalcBtn: 'ହିସାବ କରନ୍ତୁ',
+                extTitle: 'ପ୍ରସାର ଓ ସରକାରୀ ଯୋଜନା ಗାଇଡ୍', extSubtitle: 'ଗଜପତିର ଆଦିବାସୀ ଅଞ୍ଚଳ ପାଇଁ କୃଷି ପ୍ରସାର ମାର୍ଗଦର୍ଶିକା।', extC1Title: 'ଓଡ଼ିଶା ମିଲେଟ୍ ମିଶନ୍ (OMM) ସହାୟତା', extC1Desc: 'ଗଜପତିର ଏସଏଚଜି ଓ ଚାଷୀ ସଂଘଗୁଡ଼ିକ ପାଇଁ ମିଲେଟ୍ ମିଶନ୍ ଯୋଜନାରେ ସରକାରୀ ପ୍ରୋତ୍ସାହନ।',
+                footerText: '© ୨୦୨୬ ଗଜପତି କୃଷି କନେକ୍ଟ • ଆମ କୃଷି ହେଲ୍ପଲାଇନ୍: 155333 | କୃଷି ବିଜ୍ଞାନ କେନ୍ଦ୍ର (KVK) ଗଜପତି'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'en') ? 'or' : 'en';
+            const data = i18n[currentLang];
+
+            document.getElementById('site-title').innerHTML = data.siteTitle;
+            document.getElementById('site-subtitle').innerText = data.siteSubtitle;
+            document.getElementById('lang-text').innerText = data.langText;
+            document.getElementById('banner-text').innerHTML = data.bannerText;
+            document.getElementById('sell-btn-text').innerText = data.sellBtnText;
+
+            // Nav Links
+            document.getElementById('nav-home').innerText = data.navHome;
+            document.getElementById('nav-crops').innerText = data.navCrops;
+            document.getElementById('nav-marketplace').innerText = data.navMarket;
+            document.getElementById('nav-weather').innerText = data.navWeather;
+            document.getElementById('nav-tools').innerText = data.navTools;
+            document.getElementById('nav-extension').innerText = data.navExt;
+
+            // Mobile Nav
+            document.querySelector('.m-home').innerText = data.navHome;
+            document.querySelector('.m-crops').innerText = data.navCrops;
+            document.querySelector('.m-market').innerText = data.navMarket;
+            document.querySelector('.m-weather').innerText = data.navWeather;
+            document.querySelector('.m-tools').innerText = data.navTools;
+            document.querySelector('.m-extension').innerText = data.navExt;
+
+            // Hero
+            document.getElementById('hero-tag').innerText = data.heroTag;
+            document.getElementById('hero-title').innerText = data.heroTitle;
+            document.getElementById('hero-desc').innerText = data.heroDesc;
+            document.getElementById('hero-btn-market').innerHTML = data.heroBtnMarket;
+            document.getElementById('hero-btn-wiki').innerHTML = data.heroBtnWiki;
+
+            // Blocks
+            document.getElementById('block-section-title').innerText = data.blockTitle;
+            document.getElementById('block-section-subtitle').innerText = data.blockSubtitle;
+            document.getElementById('block-badge').innerText = data.blockBadge;
+            document.getElementById('b1-desc').innerText = data.b1Desc;
+            document.getElementById('b2-desc').innerText = data.b2Desc;
+            document.getElementById('b3-desc').innerText = data.b3Desc;
+            document.getElementById('b4-desc').innerText = data.b4Desc;
+            document.getElementById('b5-desc').innerText = data.b5Desc;
+            document.getElementById('b6-desc').innerText = data.b6Desc;
+            document.getElementById('b7-desc').innerText = data.b7Desc;
+
+            // Cards
+            document.getElementById('card1-title').innerText = data.card1Title;
+            document.getElementById('card1-desc').innerText = data.card1Desc;
+            document.getElementById('card1-btn').innerHTML = data.card1Btn + ' <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+
+            document.getElementById('card2-title').innerText = data.card2Title;
+            document.getElementById('card2-desc').innerText = data.card2Desc;
+            document.getElementById('card2-btn').innerHTML = data.card2Btn + ' <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+
+            document.getElementById('card3-title').innerText = data.card3Title;
+            document.getElementById('card3-desc').innerText = data.card3Desc;
+            document.getElementById('card3-btn').innerHTML = data.card3Btn + ' <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+
+            // Wiki
+            document.getElementById('wiki-title').innerText = data.wikiTitle;
+            document.getElementById('wiki-subtitle').innerText = data.wikiSubtitle;
+            document.getElementById('c1-title').innerText = data.c1Title;
+            document.getElementById('c1-desc').innerText = data.c1Desc;
+            document.getElementById('c1-sow').innerText = data.c1Sow;
+            document.getElementById('c1-harv').innerText = data.c1Harv;
+
+            document.getElementById('c2-title').innerText = data.c2Title;
+            document.getElementById('c2-desc').innerText = data.c2Desc;
+            document.getElementById('c2-sow').innerText = data.c2Sow;
+            document.getElementById('c2-harv').innerText = data.c2Harv;
+
+            document.getElementById('c3-title').innerText = data.c3Title;
+            document.getElementById('c3-desc').innerText = data.c3Desc;
+            document.getElementById('c3-sow').innerText = data.c3Sow;
+            document.getElementById('c3-harv').innerText = data.c3Harv;
+
+            // Marketplace
+            document.getElementById('market-title').innerText = data.marketTitle;
+            document.getElementById('market-subtitle').innerText = data.marketSubtitle;
+            document.getElementById('m-add-btn').innerText = data.mAddBtn;
+            document.getElementById('m1-title').innerText = data.m1Title;
+            document.getElementById('m1-btn').innerHTML = data.m1Btn;
+            document.getElementById('m2-title').innerText = data.m2Title;
+            document.getElementById('m2-btn').innerHTML = data.m2Btn;
+            document.getElementById('m3-title').innerText = data.m3Title;
+            document.getElementById('m3-btn').innerHTML = data.m3Btn;
+
+            // Weather & Tools
+            document.getElementById('w-title').innerText = data.wTitle;
+            document.getElementById('w-subtitle').innerText = data.wSubtitle;
+            document.getElementById('w-desc').innerText = data.wDesc;
+
+            document.getElementById('t-title').innerText = data.tTitle;
+            document.getElementById('t-subtitle').innerText = data.tSubtitle;
+            document.getElementById('t-calc-title').innerText = data.tCalcTitle;
+            document.getElementById('t-calc-btn').innerText = data.tCalcBtn;
+
+            // Extension
+            document.getElementById('ext-title').innerText = data.extTitle;
+            document.getElementById('ext-subtitle').innerText = data.extSubtitle;
+            document.getElementById('ext-c1-title').innerText = data.extC1Title;
+            document.getElementById('ext-c1-desc').innerText = data.extC1Desc;
+
+            document.getElementById('footer-text').innerText = data.footerText;
+
+            lucide.createIcons();
+        }
+
         function switchTab(tabId) {
-            // Hide all tab content sections
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(el => el.classList.add('hidden'));
 
-            // Show selected section
             const target = document.getElementById('sec-' + tabId);
-            if (target) {
-                target.classList.remove('hidden');
-            }
+            if (target) target.classList.remove('hidden');
 
-            // Update Desktop Nav Styling
             const navButtons = document.querySelectorAll('.nav-btn');
             navButtons.forEach(btn => {
                 btn.classList.remove('text-emerald-700', 'bg-emerald-50');
@@ -1007,124 +585,24 @@
                 activeNav.classList.remove('text-slate-600');
             }
 
-            // Close mobile menu if open
             document.getElementById('mobile-menu').classList.add('hidden');
-
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Mobile Menu Toggle
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
-        // Modal Handlers
+        function filterByBlock(blockName) {
+            switchTab('marketplace');
+        }
+
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
-        }
-
-        // Map Interactive Selection
-        function selectBlockMap(name, crops, rainfall, office) {
-            document.getElementById('map-block-tag').innerText = name;
-            document.getElementById('map-block-title').innerText = name + ' Block';
-            document.getElementById('map-block-crops').innerText = crops;
-            document.getElementById('map-block-rainfall').innerText = rainfall;
-            document.getElementById('map-block-office').innerText = office;
-        }
-
-        // Filter Quick Block Click from Home
-        function filterByBlock(blockName) {
-            switchTab('marketplace');
-            filterMarket(blockName);
-        }
-
-        // Marketplace Filter
-        function filterMarket(block) {
-            const items = document.querySelectorAll('.market-item');
-            let visibleCount = 0;
-
-            items.forEach(item => {
-                const itemBlock = item.getAttribute('data-block');
-                if (block === 'All' || itemBlock === block) {
-                    item.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-
-            document.getElementById('market-count').innerText = visibleCount;
-        }
-
-        // Crop Search Filter
-        function filterCropWiki() {
-            const input = document.getElementById('cropSearchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.crop-card');
-
-            cards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                if (text.includes(input)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        }
-
-        // Calculator Logic
-        function calculateFertilizer() {
-            const crop = document.getElementById('calcCrop').value;
-            const area = parseFloat(document.getElementById('calcArea').value) || 1;
-            
-            let fymRate = 4; // tons/acre default
-            let bioRate = 2; // kg/acre default
-
-            if (crop === 'turmeric') { fymRate = 5.0; bioRate = 2.5; }
-            else if (crop === 'coffee') { fymRate = 6.0; bioRate = 3.0; }
-            else if (crop === 'ragi') { fymRate = 3.0; bioRate = 1.5; }
-            else if (crop === 'paddy') { fymRate = 4.5; bioRate = 2.0; }
-
-            document.getElementById('resFYM').innerText = (fymRate * area).toFixed(1) + " Tons";
-            document.getElementById('resBio').innerText = (bioRate * area).toFixed(1) + " Kg";
-            document.getElementById('calcResult').classList.remove('hidden');
-        }
-
-        // Diagnostic Logic
-        function diagnoseIssue() {
-            const symptom = document.getElementById('diagSymptom').value;
-            const title = document.getElementById('diagTitle');
-            const desc = document.getElementById('diagDesc');
-
-            if (symptom === 'leaf_spot') {
-                title.innerText = "Suspected: Leaf Blight / Taphrina Leaf Spot";
-                desc.innerText = "Common in high humidity Gajapati turmeric fields. Apply Neem cake in soil & spray 1% Bordeaux mixture or Trichoderma culture.";
-            } else if (symptom === 'coffee_rust') {
-                title.innerText = "Suspected: Coffee Leaf Rust (Hemileia vastatrix)";
-                desc.innerText = "Prune dense canopy in R. Udayagiri shade trees to improve air flow. Apply 0.5% Bordeaux mixture before monsoon onset.";
-            } else if (symptom === 'millet_blast') {
-                title.innerText = "Suspected: Finger Millet Blast (Pyricularia oryzae)";
-                desc.innerText = "Use blast-resistant seeds (e.g. GPU 28 / Chilika). Treat seeds with Pseudomonas fluorescens before sowing.";
-            }
-
-            document.getElementById('diagResult').classList.remove('hidden');
-        }
-
-        // Order simulation
-        function orderItem(itemTitle, producer) {
-            alert(`Connect Request Sent!\n\nItem: ${itemTitle}\nProducer: ${producer}\n\nOur field co-ordinator will connect you with the producer WSHG via phone/WhatsApp.`);
-        }
-
-        // Handle List Produce Submission
-        function handleListProduce(e) {
-            e.preventDefault();
-            alert("Thank you! Your produce listing has been submitted for verification by the local Block Agricultural Officer.");
-            closeModal('listCropModal');
         }
     </script>
 </body>
