@@ -1,192 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gajapati Krushi Connect</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { font-family: system-ui, -apple-system, "Noto Sans Oriya", sans-serif; }
-  .card { background: #fff; border-radius: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 1rem; }
-  .inp { width: 100%; border: 1px solid #d1d5db; border-radius: .6rem; padding: .55rem .75rem; background: #fff; }
-  .inp:focus { outline: 2px solid #16a34a; border-color: #16a34a; }
-  .btn { background: #15803d; color: #fff; border-radius: .6rem; padding: .55rem 1rem; font-weight: 600; }
-  .btn:hover { background: #166534; }
-  .btn-o { border: 1px solid #15803d; color: #15803d; border-radius: .6rem; padding: .4rem .8rem; font-weight: 600; }
-  .nav-active { background: #dcfce7; color: #166534; }
-</style>
-</head>
-<body class="bg-green-50 text-gray-800 min-h-screen">
-
-<div id="cfgBanner" class="hidden bg-yellow-100 text-yellow-900 text-sm p-3 text-center">
-  Firebase is not configured yet. Open <b>index.html</b>, find <code>firebaseConfig</code> and paste your keys (see README.md).
-</div>
-
-<!-- HEADER -->
-<header class="bg-white shadow sticky top-0 z-20">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3 justify-between">
-    <div class="flex items-center gap-2">
-      <span class="text-2xl">🌾</span>
-      <div>
-        <div class="font-bold text-green-800 leading-tight">Gajapati Krushi Connect</div>
-        <div class="text-xs text-gray-500" data-i18n="tagline">Farmers • Experts • Market</div>
-      </div>
-    </div>
-    <nav class="flex flex-wrap gap-1 text-sm font-medium" id="nav">
-      <button data-view="home" class="px-3 py-1.5 rounded-lg" data-i18n="nav_home">Home</button>
-      <button data-view="market" class="px-3 py-1.5 rounded-lg" data-i18n="nav_market">Market</button>
-      <button data-view="ask" class="px-3 py-1.5 rounded-lg" data-i18n="nav_ask">Ask Expert</button>
-      <button data-view="weather" class="px-3 py-1.5 rounded-lg" data-i18n="nav_weather">Weather</button>
-      <button data-view="calc" class="px-3 py-1.5 rounded-lg" data-i18n="nav_calc">Calculators</button>
-      <button data-view="contact" class="px-3 py-1.5 rounded-lg" data-i18n="nav_contact">Contact</button>
-    </nav>
-    <div class="flex items-center gap-2 text-sm">
-      <button id="langBtn" class="btn-o">ଓଡ଼ିଆ</button>
-      <span id="userBox" class="hidden text-gray-600"></span>
-      <button id="authBtn" class="btn" data-i18n="login">Login</button>
-    </div>
-  </div>
-</header>
-
-<main class="max-w-6xl mx-auto px-4 py-6">
-
-<!-- HOME -->
-<section id="view-home" class="view">
-  <div class="card bg-gradient-to-r from-green-700 to-green-500 text-white !p-8">
-    <h1 class="text-3xl font-bold" data-i18n="hero_title">Digital agriculture for Gajapati district</h1>
-    <p class="mt-2 max-w-2xl" data-i18n="hero_sub">Sell your produce directly, ask agriculture experts, check live weather and use farming calculators.</p>
-    <div class="mt-4 flex gap-2 flex-wrap">
-      <button class="bg-white text-green-800 rounded-lg px-4 py-2 font-semibold" onclick="go('market')" data-i18n="nav_market">Market</button>
-      <button class="bg-green-900 text-white rounded-lg px-4 py-2 font-semibold" onclick="go('ask')" data-i18n="nav_ask">Ask Expert</button>
-    </div>
-  </div>
-  <div class="grid sm:grid-cols-3 gap-4 mt-6">
-    <div class="card"><div class="text-3xl font-bold text-green-700" id="statListings">0</div><div class="text-sm text-gray-500" data-i18n="stat_listings">Products listed</div></div>
-    <div class="card"><div class="text-3xl font-bold text-green-700" id="statQuestions">0</div><div class="text-sm text-gray-500" data-i18n="stat_questions">Questions asked</div></div>
-    <div class="card"><div class="text-3xl font-bold text-green-700" id="statAnswers">0</div><div class="text-sm text-gray-500" data-i18n="stat_answers">Expert answers</div></div>
-  </div>
-  <div class="card mt-6" id="homeWeather"></div>
-</section>
-
-<!-- MARKET -->
-<section id="view-market" class="view hidden">
-  <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-    <h2 class="text-2xl font-bold text-green-800" data-i18n="nav_market">Market</h2>
-    <select id="marketFilter" class="inp !w-auto"></select>
-  </div>
-  <div id="sellBox" class="card mb-6 hidden">
-    <h3 class="font-semibold mb-3" data-i18n="sell_title">List your product</h3>
-    <form id="sellForm" class="grid sm:grid-cols-3 gap-3">
-      <input class="inp" name="name" placeholder="Product (e.g. Turmeric)" required maxlength="60">
-      <input class="inp" name="price" type="number" min="1" placeholder="Price ₹" required>
-      <select class="inp" name="unit"><option>kg</option><option>quintal</option><option>dozen</option><option>piece</option></select>
-      <input class="inp" name="qty" type="number" min="1" placeholder="Quantity available" required>
-      <select class="inp" name="block" id="sellBlock"></select>
-      <input class="inp" name="phone" type="tel" pattern="[0-9]{10}" placeholder="Phone (10 digits)" required>
-      <button class="btn sm:col-span-3" data-i18n="sell_btn">Publish listing</button>
-    </form>
-  </div>
-  <p id="sellHint" class="text-sm text-gray-500 mb-4 hidden" data-i18n="sell_hint">Login as a Farmer to list your products.</p>
-  <div id="listings" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-</section>
-
-<!-- ASK -->
-<section id="view-ask" class="view hidden">
-  <h2 class="text-2xl font-bold text-green-800 mb-4" data-i18n="nav_ask">Ask Expert</h2>
-  <div id="askBox" class="card mb-6 hidden">
-    <form id="askForm" class="grid sm:grid-cols-2 gap-3">
-      <select class="inp" name="crop" id="askCrop"></select>
-      <select class="inp" name="block" id="askBlock"></select>
-      <textarea class="inp sm:col-span-2" name="text" rows="3" placeholder="Describe your crop problem..." required maxlength="600"></textarea>
-      <button class="btn sm:col-span-2" data-i18n="ask_btn">Post question</button>
-    </form>
-  </div>
-  <p id="askHint" class="text-sm text-gray-500 mb-4 hidden" data-i18n="ask_hint">Login to ask a question.</p>
-  <div id="questions" class="space-y-4"></div>
-</section>
-
-<!-- WEATHER -->
-<section id="view-weather" class="view hidden">
-  <h2 class="text-2xl font-bold text-green-800 mb-4" data-i18n="nav_weather">Weather</h2>
-  <div class="card" id="weatherBox">Loading…</div>
-</section>
-
-<!-- CALCULATORS -->
-<section id="view-calc" class="view hidden">
-  <h2 class="text-2xl font-bold text-green-800 mb-4" data-i18n="nav_calc">Calculators</h2>
-  <div class="grid md:grid-cols-2 gap-4">
-    <div class="card">
-      <h3 class="font-semibold mb-3">Fertilizer calculator</h3>
-      <select id="fCrop" class="inp mb-2"></select>
-      <input id="fArea" type="number" min="0" step="0.01" class="inp mb-2" placeholder="Area (acres)">
-      <button class="btn" onclick="calcFert()">Calculate</button>
-      <div id="fOut" class="mt-3 text-sm"></div>
-      <p class="text-xs text-gray-500 mt-2">General recommended NPK doses. Confirm with a soil test and your local agriculture office.</p>
-    </div>
-    <div class="card">
-      <h3 class="font-semibold mb-3">Land area converter</h3>
-      <input id="aVal" type="number" min="0" step="0.01" class="inp mb-2" placeholder="Value">
-      <select id="aUnit" class="inp mb-2">
-        <option value="1">Acre</option><option value="0.404686">Hectare</option>
-        <option value="100">Decimal (Odisha)</option><option value="43560">Sq. feet</option>
-        <option value="4046.86">Sq. metre</option>
-      </select>
-      <button class="btn" onclick="calcArea()">Convert</button>
-      <div id="aOut" class="mt-3 text-sm"></div>
-    </div>
-    <div class="card md:col-span-2">
-      <h3 class="font-semibold mb-3">Profit estimator</h3>
-      <div class="grid sm:grid-cols-4 gap-2">
-        <input id="pYield" type="number" class="inp" placeholder="Yield (quintal)">
-        <input id="pPrice" type="number" class="inp" placeholder="Price ₹/quintal">
-        <input id="pCost" type="number" class="inp" placeholder="Total cost ₹">
-        <button class="btn" onclick="calcProfit()">Estimate</button>
-      </div>
-      <div id="pOut" class="mt-3 text-sm"></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="view-contact" class="view hidden">
-  <h2 class="text-2xl font-bold text-green-800 mb-4" data-i18n="nav_contact">Contact</h2>
-  <div class="card max-w-xl">
-    <form id="contactForm" class="space-y-3">
-      <input class="inp" name="name" placeholder="Your name" required maxlength="60">
-      <input class="inp" name="phone" placeholder="Phone or email" required maxlength="60">
-      <textarea class="inp" name="text" rows="4" placeholder="Your message" required maxlength="600"></textarea>
-      <button class="btn" data-i18n="send">Send message</button>
-    </form>
-    <p id="contactMsg" class="text-sm text-green-700 mt-3"></p>
-  </div>
-</section>
-
-</main>
-
-<!-- AUTH MODAL -->
-<div id="authModal" class="hidden fixed inset-0 bg-black/50 z-30 flex items-center justify-center p-4">
-  <div class="card w-full max-w-sm">
-    <div class="flex justify-between mb-3">
-      <h3 class="font-bold text-lg" id="authTitle">Login</h3>
-      <button onclick="closeAuth()" class="text-gray-500 text-xl">✕</button>
-    </div>
-    <form id="authForm" class="space-y-3">
-      <input class="inp hidden" name="name" id="authName" placeholder="Full name" maxlength="60">
-      <select class="inp hidden" name="role" id="authRole">
-        <option value="farmer">I am a Farmer</option>
-        <option value="buyer">I am a Buyer</option>
-      </select>
-      <input class="inp" type="email" name="email" placeholder="Email" required>
-      <input class="inp" type="password" name="password" placeholder="Password (min 6 chars)" required minlength="6">
-      <button class="btn w-full" id="authSubmit">Login</button>
-    </form>
-    <p id="authErr" class="text-red-600 text-sm mt-2"></p>
-    <button id="authSwitch" class="text-sm text-green-700 underline mt-2">Create new account</button>
-  </div>
-</div>
-
-<footer class="text-center text-xs text-gray-500 py-6">© 2026 Gajapati Krushi Connect • Student project</footer>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut }
@@ -196,21 +7,27 @@ import { getFirestore, collection, addDoc, doc, setDoc, getDoc, deleteDoc, query
 
 /* ========== 1. PASTE YOUR FIREBASE CONFIG HERE ========== */
 const firebaseConfig = {
-  apiKey: "AIzaSyD1ZBOA-jcQlnQl5tpE-82EK7dMZ3xN780",
-  authDomain: "krushi-connect-c6274.firebaseapp.com",
-  projectId: "krushi-connect-c6274",
-  storageBucket: "krushi-connect-c6274.firebasestorage.app",
-  messagingSenderId: "793644017997",
-  appId: "1:793644017997:web:7163a66bf9f2857ebc6f04",
-  measurementId: "G-0EBK6W1QM0"
+  apiKey: "PASTE_API_KEY",
+  authDomain: "PASTE_PROJECT.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
 };
 /* ======================================================== */
 
 const configured = !firebaseConfig.apiKey.startsWith("PASTE");
-if (!configured) document.getElementById("cfgBanner").classList.remove("hidden");
-
 let auth, db;
-if (configured) { const app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); }
+
+if (configured) { 
+  const app = initializeApp(firebaseConfig); 
+  auth = getAuth(app); 
+  db = getFirestore(app); 
+} else {
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("cfgBanner")?.classList.remove("hidden");
+  });
+}
 
 const BLOCKS = ["Gumma","Rayagada","R. Udayagiri","Nuagada","Mohana","Kashinagar","Gosani"];
 const CROPS = ["Paddy","Maize","Ragi","Turmeric","Ginger","Cashew","Mango","Tomato","Brinjal","Chilli","Groundnut","Pulses","Other"];
@@ -219,6 +36,7 @@ const FERT = { // N:P2O5:K2O kg per hectare
   "Ginger":[75,50,50], "Tomato":[120,60,60], "Brinjal":[100,50,50], "Chilli":[100,50,50],
   "Groundnut":[20,40,40], "Mustard":[80,40,40], "Wheat":[120,60,40]
 };
+
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
@@ -238,118 +56,305 @@ const I18N = {
     ask_btn:"ପ୍ରଶ୍ନ ପୋଷ୍ଟ କରନ୍ତୁ", ask_hint:"ପ୍ରଶ୍ନ ପଚାରିବାକୁ ଲଗଇନ୍ କରନ୍ତୁ।", send:"ବାର୍ତ୍ତା ପଠାନ୍ତୁ" }
 };
 let lang = localStorage.getItem("lang") || "en";
+
 function applyLang() {
   document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; if (I18N[lang][k]) el.textContent = I18N[lang][k]; });
-  $("langBtn").textContent = lang === "en" ? "ଓଡ଼ିଆ" : "English";
+  if ($("langBtn")) $("langBtn").textContent = lang === "en" ? "ଓଡ଼ିଆ" : "English";
   document.documentElement.lang = lang === "en" ? "en" : "or";
-  $("authBtn").textContent = auth?.currentUser ? I18N[lang].logout : I18N[lang].login;
+  if ($("authBtn")) $("authBtn").textContent = auth?.currentUser ? I18N[lang].logout : I18N[lang].login;
 }
-$("langBtn").onclick = () => { lang = lang === "en" ? "or" : "en"; localStorage.setItem("lang", lang); applyLang(); };
 
 /* ---------- navigation ---------- */
 window.go = function (v) {
   document.querySelectorAll(".view").forEach(s => s.classList.add("hidden"));
-  $("view-" + v).classList.remove("hidden");
+  const target = $("view-" + v);
+  if (target) target.classList.remove("hidden");
   document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("nav-active", b.dataset.view === v));
   if (v === "weather") loadWeather();
   location.hash = v;
 };
-document.querySelectorAll("#nav button").forEach(b => b.onclick = () => go(b.dataset.view));
 
-/* ---------- fill selects ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  // Bind navigation buttons
+  document.querySelectorAll("#nav button").forEach(b => {
+    b.onclick = () => go(b.dataset.view);
+  });
+
+  // Fill selects
+  fill("marketFilter", BLOCKS, true); 
+  fill("sellBlock", BLOCKS); 
+  fill("askBlock", BLOCKS);
+  fill("askCrop", CROPS); 
+  fill("fCrop", Object.keys(FERT));
+
+  // Language toggle
+  if ($("langBtn")) {
+    $("langBtn").onclick = () => { 
+      lang = lang === "en" ? "or" : "en"; 
+      localStorage.setItem("lang", lang); 
+      applyLang(); 
+    };
+  }
+
+  // Auth button click
+  if ($("authBtn")) {
+    $("authBtn").onclick = async () => {
+      if (!configured) return alert("Add your Firebase config first (see README).");
+      if (auth.currentUser) { await signOut(auth); } else { openAuth(); }
+    };
+  }
+
+  // Auth switch link
+  if ($("authSwitch")) {
+    $("authSwitch").onclick = () => setMode(mode === "login" ? "signup" : "login");
+  }
+
+  // Auth form submit
+  if ($("authForm")) {
+    $("authForm").onsubmit = async e => {
+      e.preventDefault(); 
+      if ($("authErr")) $("authErr").textContent = "";
+      const f = new FormData(e.target), email = f.get("email"), pass = f.get("password");
+      try {
+        if (!configured) throw new Error("Firebase not configured.");
+        if (mode === "signup") {
+          signingUp = true;
+          const cred = await createUserWithEmailAndPassword(auth, email, pass);
+          await setDoc(doc(db, "users", cred.user.uid), { name: f.get("name").trim(), role: f.get("role"), email, createdAt: serverTimestamp() });
+          signingUp = false;
+          await handleUser(auth.currentUser);
+        } else {
+          await signInWithEmailAndPassword(auth, email, pass);
+        }
+        closeAuth(); 
+        e.target.reset();
+      } catch (err) { 
+        signingUp = false; 
+        if ($("authErr")) $("authErr").textContent = err.message.replace("Firebase: ", ""); 
+      }
+    };
+  }
+
+  // Sell form
+  if ($("sellForm")) {
+    $("sellForm").onsubmit = async e => {
+      e.preventDefault();
+      const f = Object.fromEntries(new FormData(e.target));
+      try {
+        await addDoc(collection(db, "listings"), { name: f.name.trim(), price: +f.price, unit: f.unit, qty: +f.qty, block: f.block, phone: f.phone,
+          uid: auth.currentUser.uid, sellerName: profile?.name || "Farmer", createdAt: serverTimestamp() });
+        e.target.reset();
+      } catch (err) { alert("Could not publish: " + err.message); }
+    };
+  }
+
+  if ($("marketFilter")) {
+    $("marketFilter").onchange = renderListings;
+  }
+
+  if ($("askForm")) {
+    $("askForm").onsubmit = async e => {
+      e.preventDefault();
+      const f = Object.fromEntries(new FormData(e.target));
+      try {
+        await addDoc(collection(db, "questions"), { crop: f.crop, block: f.block, text: f.text.trim(), uid: auth.currentUser.uid, name: profile?.name || "Farmer", createdAt: serverTimestamp() });
+        e.target.reset();
+      } catch (err) { alert("Could not post: " + err.message); }
+    };
+  }
+
+  if ($("contactForm")) {
+    $("contactForm").onsubmit = async e => {
+      e.preventDefault();
+      if (!configured) return alert("Add your Firebase config first.");
+      const f = Object.fromEntries(new FormData(e.target));
+      try { 
+        await addDoc(collection(db, "messages"), { name: f.name.trim(), contact: f.phone.trim(), text: f.text.trim(), createdAt: serverTimestamp() });
+        if ($("contactMsg")) $("contactMsg").textContent = "✓ Message saved to the database. Thank you!"; 
+        e.target.reset(); 
+      }
+      catch (err) { if ($("contactMsg")) $("contactMsg").textContent = "Error: " + err.message; }
+    };
+  }
+
+  applyLang();
+  go(location.hash.replace("#", "") || "home");
+
+  // Firebase listeners
+  if (configured && auth && db) {
+    onSnapshot(query(collection(db, "listings"), orderBy("createdAt", "desc")), s => { listings = s.docs.map(d => ({ id: d.id, ...d.data() })); renderListings(); }, err => console.error(err));
+    onSnapshot(query(collection(db, "questions"), orderBy("createdAt", "desc")), s => { questions = s.docs.map(d => ({ id: d.id, ...d.data() })); renderQuestions(); }, err => console.error(err));
+    onSnapshot(query(collection(db, "replies"), orderBy("createdAt", "asc")), s => { replies = s.docs.map(d => ({ id: d.id, ...d.data() })); renderQuestions(); }, err => console.error(err));
+    onAuthStateChanged(auth, user => { if (!signingUp) handleUser(user); });
+  }
+});
+
+/* ---------- helper functions ---------- */
 function fill(id, arr, withAll) {
-  $(id).innerHTML = (withAll ? `<option value="">All blocks</option>` : "") + arr.map(x => `<option>${esc(x)}</option>`).join("");
+  const el = $(id);
+  if (el) el.innerHTML = (withAll ? `<option value="">All blocks</option>` : "") + arr.map(x => `<option>${esc(x)}</option>`).join("");
 }
-fill("marketFilter", BLOCKS, true); fill("sellBlock", BLOCKS); fill("askBlock", BLOCKS);
-fill("askCrop", CROPS); fill("fCrop", Object.keys(FERT));
 
-/* ---------- auth ---------- */
 let mode = "login", profile = null;
-function openAuth() { $("authModal").classList.remove("hidden"); setMode("login"); }
-window.closeAuth = () => { $("authModal").classList.add("hidden"); $("authErr").textContent = ""; };
+function openAuth() { if ($("authModal")) $("authModal").classList.remove("hidden"); setMode("login"); }
+window.closeAuth = () => { if ($("authModal")) $("authModal").classList.add("hidden"); if ($("authErr")) $("authErr").textContent = ""; };
+
 function setMode(m) {
   mode = m;
   const signup = m === "signup";
-  $("authName").classList.toggle("hidden", !signup); $("authRole").classList.toggle("hidden", !signup);
-  $("authName").required = signup;
-  $("authTitle").textContent = signup ? "Create account" : "Login";
-  $("authSubmit").textContent = signup ? "Sign up" : "Login";
-  $("authSwitch").textContent = signup ? "Already have an account? Login" : "Create new account";
+  if ($("authName")) {
+    $("authName").classList.toggle("hidden", !signup); 
+    $("authName").required = signup;
+  }
+  if ($("authRole")) $("authRole").classList.toggle("hidden", !signup);
+  if ($("authTitle")) $("authTitle").textContent = signup ? "Create account" : "Login";
+  if ($("authSubmit")) $("authSubmit").textContent = signup ? "Sign up" : "Login";
+  if ($("authSwitch")) $("authSwitch").textContent = signup ? "Already have an account? Login" : "Create new account";
 }
-$("authSwitch").onclick = () => setMode(mode === "login" ? "signup" : "login");
-$("authBtn").onclick = async () => {
-  if (!configured) return alert("Add your Firebase config first (see README).");
-  if (auth.currentUser) { await signOut(auth); } else openAuth();
-};
-$("authForm").onsubmit = async e => {
-  e.preventDefault(); $("authErr").textContent = "";
-  const f = new FormData(e.target), email = f.get("email"), pass = f.get("password");
-  try {
-    if (!configured) throw new Error("Firebase not configured.");
-    if (mode === "signup") {
-      signingUp = true;
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await setDoc(doc(db, "users", cred.user.uid), { name: f.get("name").trim(), role: f.get("role"), email, createdAt: serverTimestamp() });
-      signingUp = false;
-      await handleUser(auth.currentUser);
-    } else {
-      await signInWithEmailAndPassword(auth, email, pass);
-    }
-    closeAuth(); e.target.reset();
-  } catch (err) { signingUp = false; $("authErr").textContent = err.message.replace("Firebase: ", ""); }
-};
 
 let signingUp = false;
-if (configured) onAuthStateChanged(auth, user => { if (!signingUp) handleUser(user); });
+
 async function handleUser(user) {
   profile = null;
   if (user) {
-    try { const s = await getDoc(doc(db, "users", user.uid)); profile = s.exists() ? s.data() : { name: user.email, role: "farmer" }; } catch { profile = { name: user.email, role: "farmer" }; }
-    $("userBox").textContent = `${profile.name} (${profile.role})`; $("userBox").classList.remove("hidden");
-  } else { $("userBox").classList.add("hidden"); }
-  $("sellBox").classList.toggle("hidden", !(user && profile?.role === "farmer"));
-  $("sellHint").classList.toggle("hidden", !!(user && profile?.role === "farmer"));
-  $("askBox").classList.toggle("hidden", !user);
-  $("askHint").classList.toggle("hidden", !!user);
+    try { 
+      const s = await getDoc(doc(db, "users", user.uid)); 
+      profile = s.exists() ? s.data() : { name: user.email, role: "farmer" }; 
+    } catch { 
+      profile = { name: user.email, role: "farmer" }; 
+    }
+    if ($("userBox")) {
+      $("userBox").textContent = `${profile.name} (${profile.role})`; 
+      $("userBox").classList.remove("hidden");
+    }
+  } else { 
+    if ($("userBox")) $("userBox").classList.add("hidden"); 
+  }
+  if ($("sellBox")) $("sellBox").classList.toggle("hidden", !(user && profile?.role === "farmer"));
+  if ($("sellHint")) $("sellHint").classList.toggle("hidden", !!(user && profile?.role === "farmer"));
+  if ($("askBox")) $("askBox").classList.toggle("hidden", !user);
+  if ($("askHint")) $("askHint").classList.toggle("hidden", !!user);
   applyLang(); renderListings(); renderQuestions();
 }
 
 /* ---------- market ---------- */
 let listings = [];
 function renderListings() {
-  const f = $("marketFilter").value;
+  const filterEl = $("marketFilter");
+  const f = filterEl ? filterEl.value : "";
   const rows = listings.filter(l => !f || l.block === f);
-  $("statListings").textContent = listings.length;
-  $("listings").innerHTML = rows.length ? rows.map(l => {
-    const mine = auth?.currentUser && (auth.currentUser.uid === l.uid || profile?.role === "officer");
-    return `<div class="card">
-      <div class="flex justify-between"><h4 class="font-bold text-lg">${esc(l.name)}</h4><span class="text-xs bg-green-100 text-green-800 rounded px-2 py-1">${esc(l.block)}</span></div>
-      <div class="text-green-700 font-semibold text-xl mt-1">₹${esc(l.price)} / ${esc(l.unit)}</div>
-      <div class="text-sm text-gray-600">Available: ${esc(l.qty)} ${esc(l.unit)}</div>
-      <div class="text-sm text-gray-600">Seller: ${esc(l.sellerName)}</div>
-      <div class="flex gap-2 mt-3 flex-wrap">
-        <a class="btn-o text-sm" href="tel:${esc(l.phone)}">📞 Call</a>
-        <a class="btn-o text-sm" target="_blank" rel="noopener" href="https://wa.me/91${esc(l.phone)}?text=${encodeURIComponent("Hello, I saw your " + l.name + " listing on Gajapati Krushi Connect")}">WhatsApp</a>
-        ${mine ? `<button class="text-red-600 text-sm underline" data-del="${esc(l.id)}">Delete</button>` : ""}
-      </div></div>`;
-  }).join("") : `<p class="text-gray-500">No listings yet.</p>`;
-  document.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => { if (confirm("Delete this listing?")) await deleteDoc(doc(db, "listings", b.dataset.del)); });
+  if ($("statListings")) $("statListings").textContent = listings.length;
+  
+  const listEl = $("listings");
+  if (listEl) {
+    listEl.innerHTML = rows.length ? rows.map(l => {
+      const mine = auth?.currentUser && (auth.currentUser.uid === l.uid || profile?.role === "officer");
+      return `<div class="card">
+        <div class="flex justify-between"><h4 class="font-bold text-lg">${esc(l.name)}</h4><span class="text-xs bg-green-100 text-green-800 rounded px-2 py-1">${esc(l.block)}</span></div>
+        <div class="text-green-700 font-semibold text-xl mt-1">₹${esc(l.price)} / ${esc(l.unit)}</div>
+        <div class="text-sm text-gray-600">Available: ${esc(l.qty)} ${esc(l.unit)}</div>
+        <div class="text-sm text-gray-600">Seller: ${esc(l.sellerName)}</div>
+        <div class="flex gap-2 mt-3 flex-wrap">
+          <a class="btn-o text-sm" href="tel:${esc(l.phone)}">📞 Call</a>
+          <a class="btn-o text-sm" target="_blank" rel="noopener" href="https://wa.me/91${esc(l.phone)}?text=${encodeURIComponent("Hello, I saw your " + l.name + " listing on Gajapati Krushi Connect")}">WhatsApp</a>
+          ${mine ? `<button class="text-red-600 text-sm underline" data-del="${esc(l.id)}">Delete</button>` : ""}
+        </div></div>`;
+    }).join("") : `<p class="text-gray-500">No listings yet.</p>`;
+    
+    listEl.querySelectorAll("[data-del]").forEach(b => {
+      b.onclick = async () => { if (confirm("Delete this listing?")) await deleteDoc(doc(db, "listings", b.dataset.del)); };
+    });
+  }
 }
-$("marketFilter").onchange = renderListings;
-$("sellForm").onsubmit = async e => {
-  e.preventDefault();
-  const f = Object.fromEntries(new FormData(e.target));
-  try {
-    await addDoc(collection(db, "listings"), { name: f.name.trim(), price: +f.price, unit: f.unit, qty: +f.qty, block: f.block, phone: f.phone,
-      uid: auth.currentUser.uid, sellerName: profile?.name || "Farmer", createdAt: serverTimestamp() });
-    e.target.reset();
-  } catch (err) { alert("Could not publish: " + err.message); }
-};
 
 /* ---------- ask expert ---------- */
 let questions = [], replies = [];
 function renderQuestions() {
-  $("statQuestions").textContent = questions.length; $("statAnswers").textContent = replies.length;
+  if ($("statQuestions")) $("statQuestions").textContent = questions.length; 
+  if ($("statAnswers")) $("statAnswers").textContent = replies.length;
   const isOfficer = profile?.role === "officer";
-  $("questions").innerHTML = questions.length ? questions.map(q => {
-    const rs = replies.filter(r => r.q
+  
+  const qEl = $("questions");
+  if (qEl) {
+    qEl.innerHTML = questions.length ? questions.map(q => {
+      const rs = replies.filter(r => r.qid === q.id);
+      const canDel = auth?.currentUser && (auth.currentUser.uid === q.uid || isOfficer);
+      return `<div class="card">
+        <div class="flex justify-between flex-wrap gap-1 text-xs text-gray-500"><span>${esc(q.name)} • ${esc(q.block)} • <b>${esc(q.crop)}</b></span>
+          ${canDel ? `<button class="text-red-600 underline" data-dq="${esc(q.id)}">Delete</button>` : ""}</div>
+        <p class="mt-2">${esc(q.text)}</p>
+        <div class="mt-3 space-y-2">${rs.map(r => `<div class="bg-green-50 border-l-4 border-green-600 p-2 rounded text-sm"><b>🧑‍🔬 ${esc(r.name)}:</b> ${esc(r.text)}</div>`).join("") || `<div class="text-xs text-gray-400">No answer yet</div>`}</div>
+        ${isOfficer ? `<form class="flex gap-2 mt-3" data-reply="${esc(q.id)}"><input class="inp" placeholder="Write expert answer" required maxlength="600"><button class="btn">Reply</button></form>` : ""}
+      </div>`;
+    }).join("") : `<p class="text-gray-500">No questions yet. Be the first to ask!</p>`;
+
+    qEl.querySelectorAll("[data-dq]").forEach(b => {
+      b.onclick = async () => { if (confirm("Delete question?")) await deleteDoc(doc(db, "questions", b.dataset.dq)); };
+    });
+    qEl.querySelectorAll("[data-reply]").forEach(f => {
+      f.onsubmit = async e => {
+        e.preventDefault();
+        try { 
+          await addDoc(collection(db, "replies"), { qid: f.dataset.reply, text: f.querySelector("input").value.trim(), name: profile.name, uid: auth.currentUser.uid, createdAt: serverTimestamp() }); 
+        } catch (err) { alert("Could not reply: " + err.message); }
+      };
+    });
+  }
+}
+
+/* ---------- weather ---------- */
+let weatherHTML = null;
+async function loadWeather() {
+  if (weatherHTML) {
+    if ($("weatherBox")) $("weatherBox").innerHTML = weatherHTML;
+    if ($("homeWeather")) $("homeWeather").innerHTML = weatherHTML;
+    return;
+  }
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=18.78&longitude=84.09&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Asia%2FKolkata&forecast_days=5";
+    const d = await (await fetch(url)).json(), c = d.current;
+    weatherHTML = `<div class="text-sm text-gray-500">Paralakhemundi, Gajapati • live</div>
+      <div class="text-4xl font-bold text-green-700 my-1">${c.temperature_2m}°C</div>
+      <div class="text-sm">Humidity ${c.relative_humidity_2m}% • Wind ${c.wind_speed_10m} km/h • Rain now ${c.precipitation} mm</div>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4">${d.daily.time.map((t, i) => `
+        <div class="bg-green-50 rounded-lg p-2 text-center text-sm"><div class="font-semibold">${new Date(t).toLocaleDateString("en-IN", { weekday: "short", day: "numeric" })}</div>
+        <div>${Math.round(d.daily.temperature_2m_max[i])}° / ${Math.round(d.daily.temperature_2m_min[i])}°</div>
+        <div class="text-blue-700">🌧 ${d.daily.precipitation_sum[i]} mm</div></div>`).join("")}</div>`;
+  } catch { weatherHTML = "Could not load weather. Check internet."; }
+  if ($("weatherBox")) $("weatherBox").innerHTML = weatherHTML; 
+  if ($("homeWeather")) $("homeWeather").innerHTML = weatherHTML;
+}
+
+/* ---------- calculators ---------- */
+window.calcFert = () => {
+  const cropVal = $("fCrop")?.value;
+  const areaVal = $("fArea")?.value;
+  if (!cropVal || !FERT[cropVal]) return;
+  const [n, p, k] = FERT[cropVal], acres = parseFloat(areaVal);
+  if (!(acres > 0)) return $("fOut").textContent = "Enter area in acres.";
+  const ha = acres * 0.404686;
+  const N = n * ha, P = p * ha, K = k * ha;
+  const dap = P / 0.46, nFromDap = dap * 0.18, urea = Math.max(0, N - nFromDap) / 0.46, mop = K / 0.60;
+  if ($("fOut")) {
+    $("fOut").innerHTML = `<b>Nutrients:</b> N ${N.toFixed(1)} kg, P₂O₅ ${P.toFixed(1)} kg, K₂O ${K.toFixed(1)} kg<br>
+      <b>Urea:</b> ${urea.toFixed(1)} kg<br><b>DAP:</b> ${dap.toFixed(1)} kg<br><b>MOP:</b> ${mop.toFixed(1)} kg`;
+  }
+};
+
+window.calcArea = () => {
+  const v = parseFloat($("aVal")?.value), u = parseFloat($("aUnit")?.value);
+  if (!(v > 0)) return $("aOut").textContent = "Enter a value.";
+  const acres = v / u;
+  if ($("aOut")) {
+    $("aOut").innerHTML = `${acres.toFixed(3)} acre<br>${(acres * 0.404686).toFixed(3)} hectare<br>${(acres * 100).toFixed(1)} decimal<br>${(acres * 43560).toFixed(0)} sq ft`;
+  }
+};
+
+window.calcProfit = () => {
+  const y = +$("pYield")?.value, p = +$("pPrice")?.value, c = +$("pCost")?.value;
+  const rev = y * p, prof = rev - c;
+  if ($("pOut")) {
+    $("pOut").innerHTML = `Revenue: ₹${rev.toLocaleString("en-IN")}<br>Profit: <b class="${prof >= 0 ? "text-green-700" : "text-red-600"}">₹${prof.toLocaleString("en-IN")}</b>`;
+  }
+};
+</script>
